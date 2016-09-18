@@ -124,7 +124,7 @@ void Paddle::processHumanMovement()
 		float myTop = this->getTop();
 		// if ( myTop > SETTINGS.playAreaTopLine ) {
 		// if we move up now, will our top stay within playArea?
-		if ( ( myTop - CONFIG_PADDLE_MOVEMENT_POS_STEP ) > SETTINGS.playAreaTopLine ) {
+		if ( ( myTop - CONFIG_PADDLE_MOVEMENT_POS_STEP2 ) > SETTINGS.playAreaTopLine ) {
 			// yes legal.
 			// yes we can move now
 			sf::Vector2f moveDistance( ( 0.f ), ( CONFIG_PADDLE_MOVEMENT_NEG_STEP2 ) );
@@ -146,7 +146,7 @@ void Paddle::processHumanMovement()
 		// but is it legal to move down?
 		float myBottom = this->getBottom();
 		// if we move up now, will our bottom stay within playArea?
-		if ( ( myBottom + CONFIG_PADDLE_MOVEMENT_POS_STEP ) < SETTINGS.playAreaBottomLine ) {
+		if ( ( myBottom + CONFIG_PADDLE_MOVEMENT_POS_STEP2 ) < SETTINGS.playAreaBottomLine ) {
 			// yes legal.
 			sf::Vector2f moveDistance( ( 0.f ), ( CONFIG_PADDLE_MOVEMENT_POS_STEP2 ) );
 			this->m_shape.move( moveDistance );
