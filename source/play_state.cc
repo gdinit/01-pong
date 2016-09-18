@@ -1,14 +1,13 @@
-/* playstate.cc */
+/* play_state.cc */
 
-#include <include/playstate.h>
+#include <include/play_state.h>
 
-extern Settings				SETTINGS;
-// extern Globals			GLOBALS;
+extern std::unique_ptr <Settings>	SETTINGS;
 extern std::unique_ptr <Globals>	GLOBALS;
 extern std::unique_ptr <Paddle>		paddleRight;
 extern std::unique_ptr <Paddle>		paddleLeft;
 extern std::unique_ptr <Ball>		ball;
-// TODO add score here
+extern std::unique_ptr <Scoreboard>	scoreboard;
 
 PlayState::PlayState( StateMachine &machine, sf::RenderWindow &window, bool replace ) : State{ machine, window, replace }
 {
@@ -19,7 +18,6 @@ void PlayState::initializeState()
 {
 	restartStateClock();
 	m_justResumed = false;
-
 	m_worldView = m_window.getDefaultView();
 	m_urgentUpdateNeeded = 10;
 
@@ -33,27 +31,20 @@ void PlayState::initializeState()
 	m_statisticsText.setPosition( 5.f, 5.f );
 	m_statisticsText.setCharacterSize( 12u );
 	m_statisticsText.setFillColor( sf::Color::White );
-	// give me stats in the first frame, but first make up some plausible values
 	updateDebugOverlayTextIfEnabled( true );
 
 	// start a new round.
 	m_nextThrowTowardsRight = true;
-	paddleRight->m_computerControlled = SETTINGS.sideRightIsComputer;
-	paddleLeft->m_computerControlled = SETTINGS.sideLeftIsComputer;
+	paddleRight->m_computerControlled = SETTINGS->sideRightIsComputer;
+	paddleLeft->m_computerControlled = SETTINGS->sideLeftIsComputer;
 	paddleRight->newRound();
 	paddleLeft->newRound();
 	ball->newRound( m_nextThrowTowardsRight );
-
-	std::cout << "PlayState Init\t\t\tState Age is: " + std::to_string( getStateAgeAsSeconds() ) + ">>>\n";	// TODO delete this debug line
-	std::cout << "SETTINGS.inGameOverlay=" << SETTINGS.inGameOverlay <<
-		"\t|\tSETTINGS.debugPrintToConsole=" << SETTINGS.debugPrintToConsole <<
-		"\t|\tSETTINGS.debugPrintToConsoleFPS=" << SETTINGS.debugPrintToConsoleFPS <<
-		"\n\n";		// TODO delete this debug line
+	scoreboard->centrePosition();
 }
 
 void PlayState::pause()
 {
-	std::cout << "PlayState Pause" << std::endl;
 }
 
 void PlayState::resume()
@@ -62,8 +53,8 @@ void PlayState::resume()
 	m_urgentUpdateNeeded = 10;
 	// destroy the queue
 	m_justResumed = true;
-	updateDebugOverlayTextIfEnabled( true );// give me stats in the first frame, but first make up some plausible values
-	std::cout << "PlayState Resume\t\t\tState Age is: " + std::to_string( getStateAgeAsSeconds() ) + ">>>\n";// TODO delete this debug line
+	// give me stats in the first frame, but first make up some plausible values
+	updateDebugOverlayTextIfEnabled( true );
 }
 
 void PlayState::update()
@@ -85,6 +76,7 @@ void PlayState::update()
 		paddleRight->update( m_elapsedTime );
 		paddleLeft->update( m_elapsedTime );
 		ball->update( m_elapsedTime );
+		scoreboard->update( m_elapsedTime );
 
 		// update statistics for the debug overlay
 		m_statisticsUpdateTime += m_elapsedTime;
@@ -97,7 +89,6 @@ void PlayState::update()
 			updateDebugOverlayTextIfEnabled();
 			printConsoleDebugIfEnabled();
 			m_urgentUpdateNeeded = false;
-			std::cout << "Urgent updated!*****\tnew val: " << m_urgentUpdateNeeded << "\n";	// TODO delete this debug line
 		}
 		if ( m_statisticsUpdateTime >= sf::seconds( 1.0f ) ) {
 			if ( m_statisticsNumFrames <= 1 ) {
@@ -112,10 +103,10 @@ void PlayState::update()
 
 			m_statisticsUpdateTime -= sf::seconds( 1.0f );
 			m_statisticsNumFrames = 0;
-		}// exiting update statsText only once a second
-	}// exiting "m_timeSinceLastUpdate > State::TimePerFrame". -- draw() will execute now.
+		}
+	}
 	m_justResumed = false;
-}// exiting update()
+}
 
 void PlayState::draw()
 {
@@ -123,13 +114,14 @@ void PlayState::draw()
 	m_window.draw( m_bg );
 
 	// debug overlay
-	if ( SETTINGS.inGameOverlay ) {
+	if ( SETTINGS->inGameOverlay ) {
 		m_window.draw( m_statisticsText );
 	}
 
 	ball->draw( m_window, sf::RenderStates::Default );
 	paddleRight->draw( m_window, sf::RenderStates::Default );
 	paddleLeft->draw( m_window, sf::RenderStates::Default );
+	scoreboard->draw( m_window, sf::RenderStates::Default );
 
 	// finally, display the updated window
 	m_window.display();

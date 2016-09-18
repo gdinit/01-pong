@@ -3,11 +3,9 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include <include/introstate.h>
-#include <include/statemachine.h>
-// configuration values defined here
+#include <include/intro_state.h>
+#include <include/state_machine.h>
 #include <include/config.h>
-// configuration values loaded into this struct to mke them globally toggle-able at runtime
 #include <include/globals.h>
 
 #include <SFML/Graphics/RenderWindow.hpp>

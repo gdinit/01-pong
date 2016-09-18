@@ -50,7 +50,6 @@ constexpr float			CONFIG_BALL_WIDTH { 7.f };
 constexpr float			CONFIG_BALL_HEIGHT { 7.f };
 constexpr float			CONFIG_BALL_SPAWN_POS { -100.f };
 constexpr float			CONFIG_BALL_ONHIT_ACCELERATION { 1.f };
-constexpr float			CONFIG_BALL_FRICTION { 0.1f };
 constexpr float			CONFIG_BALL_SLOWER { 0.3f };
 
 // PLAY AREA

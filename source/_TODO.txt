@@ -1,8 +1,10 @@
 // -----------------------------------------------------------------------------
 // MISSING ---------------------------------------------------------------------
 // -----------------------------------------------------------------------------
+-make Settings unique ptr
+-change filenames to underscore standard
+-scoreboard system, just two numbers --> leftPlayer & rightPlayer score
 -sound
--scoreboard system
 -actual scoring system and `update scoreboard` call
 -menus
 	-main menu	start a new game, options

@@ -34,7 +34,7 @@ const char * getExePath()
 	uint32_t	size = sizeof( exe_path );
 
 	if ( _NSGetExecutablePath( exe_path, &size ) != 0 ) {
-		std::cerr << "Error Occured with _NSGetExecutablePath " << std::endl;
+		std::cout << "Error Occured with _NSGetExecutablePath " << std::endl;
 	} else {
 		// now attempt to get a real path (no symlinks)
 		realpath( real_path, exe_path );

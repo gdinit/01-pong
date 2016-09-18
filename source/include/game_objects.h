@@ -5,6 +5,7 @@
 
 #include <include/ball.h>
 #include <include/paddle.h>
+#include <include/scoreboard.h>
 #include <include/make_unique.h>
 
 // needed for std::unique_ptr

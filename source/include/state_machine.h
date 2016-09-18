@@ -1,7 +1,7 @@
-/* statemachine.h */
+/* state_machine.h */
 
-#ifndef STATEMACHINE_H
-#define STATEMACHINE_H
+#ifndef STATE_MACHINE_H
+#define STATE_MACHINE_H
 
 #include <include/state.h>
 
@@ -64,7 +64,7 @@ std::unique_ptr <T> StateMachine::build( StateMachine & machine,
 	return std::unique_ptr <T> ( new T( machine, window, replace ) );
 }
 
-#endif	// STATEMACHINE_H
+#endif	// STATE_MACHINE_H
 
 /* EOF */
 

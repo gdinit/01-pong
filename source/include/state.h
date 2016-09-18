@@ -15,7 +15,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
-// TODO is this debug only? remove
+// needed for consoleDebugOut cout
 #include <iostream>
 // needed for unique_ptr
 #include <memory>
@@ -24,9 +24,10 @@
 // needed for round()
 #include <cmath>
 
-extern Settings	SETTINGS;
+// extern Settings	SETTINGS;
 // extern Globals	GLOBALS;
 // extern std::unique_ptr <Globals>	GLOBALS;
+extern std::unique_ptr <Settings> SETTINGS;
 
 class StateMachine;
 
@@ -38,11 +39,12 @@ namespace sf
 class State
 {
 	public:
-		State( StateMachine &	machine,
-		sf::RenderWindow &	window,
-		bool			replace = true );
+		State( StateMachine &machine,		     sf::RenderWindow &window,	       bool replace = true );
+
 		virtual ~State() = default;
+
 		State( const State & ) = delete;
+
 		State & operator	=( const State & ) = delete;
 		std::unique_ptr <State> next();
 		virtual void		update() = 0;
@@ -50,17 +52,14 @@ class State
 		virtual void		pause() = 0;
 		virtual void		resume() = 0;
 		bool			isReplacing();
-		// TODO why virtual?
-		virtual void		toggleDebugShowOverlay();
-		// TODO why virtual?
-		virtual void		toggleDebugConsoleOutput();
-		// TODO why virtual?
-		virtual void		toggleDebugDynFPSConsoleOutput();
-		virtual void		updateDebugOverlayTextIfEnabled( bool b );
-		virtual void		updateDebugOverlayTextIfEnabled();
-		virtual void		printConsoleDebugIfEnabled();
-		virtual void		recordObservedFPS();
-		virtual void		dynamicallyAdjustFPSLimit();
+		void			toggleDebugShowOverlay();
+		void			toggleDebugConsoleOutput();
+		void			toggleDebugDynFPSConsoleOutput();
+		void			updateDebugOverlayTextIfEnabled( bool b );
+		void			updateDebugOverlayTextIfEnabled();
+		void			printConsoleDebugIfEnabled();
+		void			recordObservedFPS();
+		void			dynamicallyAdjustFPSLimit();
 		unsigned short int	calcMedianFPS( std::deque <unsigned short int> records );
 		void			restartStateClock();
 		int			getStateAgeAsSeconds();
@@ -70,23 +69,18 @@ class State
 		StateMachine &			m_machine;
 		sf::RenderWindow &		m_window;
 		bool				m_replacing;
-		// TODO rename this
 		static const sf::Time		TimePerFrame;
 		int				m_statisticsNumFrames;
 		sf::Time			m_timeSinceLastUpdate;
 		sf::Time			m_elapsedTime;
 		sf::Clock			m_clock;
-
-		// hmm
 		sf::Clock			m_stateBirthdate;
 		sf::Time			m_stateAge;
-
 		sf::Font			m_font;
 		sf::Text			m_statisticsText;
 		sf::Time			m_statisticsUpdateTime;
 		unsigned short int		m_urgentUpdateNeeded;
 		sf::View			m_worldView;
-
 		std::deque <unsigned short int>	m_observedFPSLastN;
 		short int			m_FPSAdjPosDelta = 0;
 		short int			m_FPSAdjNegDelta = 0;

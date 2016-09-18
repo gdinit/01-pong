@@ -1,21 +1,24 @@
-/* introstate.cc */
+/* ingame_menu_state.cc */
 
-#include <include/introstate.h>
+#include <include/ingame_menu_state.h>
 
-IntroState::IntroState( StateMachine &	machine,
-	sf::RenderWindow &		window,
-	bool				replace )
+InGameMenuState::InGameMenuState( StateMachine &machine,
+	sf::RenderWindow &			window,
+	bool					replace )
 	: State{ machine, window, replace }
 {
 	initializeState();
 }
 
-void IntroState::initializeState()
+void InGameMenuState::initializeState()
 {
 	restartStateClock();
 
+	m_worldView = m_window.getDefaultView();
+	m_urgentUpdateNeeded = 10;
+
 	// background
-	m_bgTex.loadFromFile( "assets/textures/1title_screen.png" );
+	m_bgTex.loadFromFile( "assets/textures/4in_game_menu.png" );
 	m_bg.setTexture( m_bgTex, true );
 
 	// debug overlay font
@@ -25,38 +28,20 @@ void IntroState::initializeState()
 	m_statisticsText.setCharacterSize( 12u );
 	m_statisticsText.setFillColor( sf::Color::White );
 	updateDebugOverlayTextIfEnabled( true );// give me stats in the first frame, but first make up some plausible values
-
-	// PressToContinue Text
-	m_fontPressToContinue.loadFromFile( "assets/fonts/sansation.ttf" );
-	m_textPressToContinue.setFont( m_fontPressToContinue );
-	m_textPressToContinue.setCharacterSize( 24u );
-	m_textPressToContinue.setFillColor( sf::Color::White );
-	m_textPressToContinue.setString( "Press Space Bar to Continue" );
-	centerOrigin( m_textPressToContinue );
-	m_textPressToContinue.setPosition( ( m_worldView.getSize().x / 2 ), ( m_worldView.getSize().y / 2 ) );
-
-	// Start off opaque
-	m_alpha = sf::Color { 0, 0, 0, 255 };
-	// Fill the fader surface with black
-	m_fader.setFillColor( m_alpha );
-	m_fader.setSize( static_cast <sf::Vector2f> ( m_bgTex.getSize() ) );
-
-	std::cout << "IntroState Init\t\t\tState Age is: " + std::to_string( getStateAgeAsSeconds() ) + ">>>\n";// TODO delete this debug line
-	std::cout << "SETTINGS.inGameOverlay=" << SETTINGS.inGameOverlay << "\t|\tSETTINGS.debugPrintToConsole=" << SETTINGS.debugPrintToConsole << "\t|\tSETTINGS.debugPrintToConsoleFPS=" << SETTINGS.debugPrintToConsoleFPS << "\n\n";// TODO delete this debug line
 }
 
-void IntroState::pause()
+void InGameMenuState::pause()
 {
-	std::cout << "IntroState Pause" << std::endl;
+	std::cout << "InGameMenuState Pause" << std::endl;
 }
 
-void IntroState::resume()
+void InGameMenuState::resume()
 {
 	restartStateClock();
-	std::cout << "IntroState Resume" << std::endl;
+	std::cout << "InGameMenuState Resume\t\t\tState Age is: " + std::to_string( getStateAgeAsSeconds() ) + ">>>\n";	// TODO delete this debug line
 }
 
-void IntroState::update()
+void InGameMenuState::update()
 {
 	sf::Time m_elapsedTime = m_clock.restart();
 	m_timeSinceLastUpdate += m_elapsedTime;
@@ -72,6 +57,15 @@ void IntroState::update()
 		m_statisticsUpdateTime += m_elapsedTime;
 		m_statisticsNumFrames += 1;
 		// update statsText only once a second
+		// however, if just entered this state (i.e.: this is the 2nd updateStats), then immediately update
+		if ( m_urgentUpdateNeeded > 0 ) {
+			// update now!
+			--m_urgentUpdateNeeded;
+			updateDebugOverlayTextIfEnabled();
+			printConsoleDebugIfEnabled();
+			m_urgentUpdateNeeded = false;
+			std::cout << "Urgent updated!*****\tnew val: " << m_urgentUpdateNeeded << "\n";	// TODO delete this debug line
+		}
 		if ( m_statisticsUpdateTime >= sf::seconds( 1.0f ) ) {
 			if ( m_statisticsNumFrames <= 1 ) {
 				break;	// if we're playing catchup, don't bother with debugOverlayText
@@ -79,6 +73,7 @@ void IntroState::update()
 
 			recordObservedFPS();
 			dynamicallyAdjustFPSLimit();
+
 			updateDebugOverlayTextIfEnabled();
 			printConsoleDebugIfEnabled();
 
@@ -86,34 +81,20 @@ void IntroState::update()
 			m_statisticsNumFrames = 0;
 		}// exiting update statsText only once a second
 	}// exiting "m_timeSinceLastUpdate > State::TimePerFrame". -- draw() will execute now.
-	if ( m_alpha.a != 0 ) {
-		m_alpha.a--;
-	}
-
-	m_fader.setFillColor( m_alpha );
 }// exiting update()
 
-void IntroState::draw()
+void InGameMenuState::draw()
 {
-	// Clear the previous drawing
 	m_window.clear();
-
 	m_window.draw( m_bg );
-	// if ( inGameOverlay ) {
+	// if ( SETTINGS->inGameOverlay ) {
 	if ( true ) {
 		m_window.draw( m_statisticsText );
 	}
-
-	// No need to draw if it's transparent
-	if ( m_alpha.a != 0 ) {
-		m_window.draw( m_fader );
-	}
-
-	m_window.draw( m_textPressToContinue );
 	m_window.display();
 }
 
-void IntroState::processEvents()
+void InGameMenuState::processEvents()
 {
 	// fetch events
 	sf::Event evt;
@@ -124,17 +105,11 @@ void IntroState::processEvents()
 			case sf::Event::Closed:
 				m_machine.quit();
 				break;
-
 			case sf::Event::KeyPressed:
-				// NOTE: Intro should not have pause state (no user input = already paused state!)
 				switch ( evt.key.code ) {
 					case sf::Keyboard::Escape:
-					case sf::Keyboard::Space:
-					case sf::Keyboard::Return:
-						m_next = StateMachine::build <MainMenuState> ( m_machine, m_window, true );
-						break;
-					case sf::Keyboard::Q:
-						m_machine.quit();
+					case sf::Keyboard::M:
+						m_machine.lastState();
 						break;
 					case sf::Keyboard::F2:
 						this->toggleDebugShowOverlay();

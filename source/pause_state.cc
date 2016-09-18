@@ -1,11 +1,11 @@
-/* pausestate.cc */
+/* pause_state.cc */
 
-#include <include/pausestate.h>
+#include <include/pause_state.h>
 
-extern Settings			SETTINGS;
-extern std::unique_ptr <Paddle>	paddleRight;
-extern std::unique_ptr <Paddle>	paddleLeft;
-extern std::unique_ptr <Ball>	ball;
+extern std::unique_ptr <Settings>	SETTINGS;
+extern std::unique_ptr <Paddle>		paddleRight;
+extern std::unique_ptr <Paddle>		paddleLeft;
+extern std::unique_ptr <Ball>		ball;
 // TODO add score here
 
 PauseState::PauseState( StateMachine &machine, sf::RenderWindow &window, bool replace )
@@ -16,11 +16,7 @@ PauseState::PauseState( StateMachine &machine, sf::RenderWindow &window, bool re
 
 void PauseState::initializeState()
 {
-	// testing
-	std::cout << "SETTINGS.currentScreenSizeWidth is: " << SETTINGS.currentScreenSizeWidth << ", SETTINGS.currentScreenSizeHeight is: " << SETTINGS.currentScreenSizeHeight << "\n";// TODO delete this debug line
-
 	restartStateClock();
-
 	m_worldView = m_window.getDefaultView();
 	m_urgentUpdateNeeded = 10;
 
@@ -36,39 +32,32 @@ void PauseState::initializeState()
 	m_statisticsText.setFillColor( sf::Color::White );
 	updateDebugOverlayTextIfEnabled( true );// give me stats in the first frame, but first make up some plausible values
 
-	// PressToContinue Text
+	// PressToContinue Text Line 1
 	m_fontPressToContinue.loadFromFile( "assets/fonts/sansation.ttf" );
 	m_textPressToContinue.setFont( m_fontPressToContinue );
 	m_textPressToContinue.setCharacterSize( 48u );
-	// m_textPressToContinue.setFillColor( sf::Color::Yellow );
 	m_textPressToContinue.setFillColor( sf::Color::White );
 	m_textPressToContinue.setString( "GAME PAUSED" );
 	centerOrigin( m_textPressToContinue );
 	m_textPressToContinue.setPosition( ( m_worldView.getSize().x / 2 ), ( m_worldView.getSize().y / 2 ) );
-	//
-	// PressToContinue Text Line2
+
+	// PressToContinue Text Line 2
 	m_fontPressToContinueLine2.loadFromFile( "assets/fonts/sansation.ttf" );
 	m_textPressToContinueLine2.setFont( m_fontPressToContinue );
 	m_textPressToContinueLine2.setCharacterSize( 15u );
-	// m_textPressToContinueLine2.setFillColor( sf::Color::Yellow );
 	m_textPressToContinueLine2.setFillColor( sf::Color::White );
 	m_textPressToContinueLine2.setString( "\nPress PauseBreak or P to continue" );
 	centerOrigin( m_textPressToContinueLine2 );
 	m_textPressToContinueLine2.setPosition( ( m_worldView.getSize().x / 2 ), ( ( m_worldView.getSize().y / 2 ) + 50 ) );
-
-	// std::cout << "PauseState Init\t\t\tState Age is: " + std::to_string( getStateAgeAsSeconds() ) + ">>>\n";// TODO delete this debug line
-	std::cout << "SETTINGS.inGameOverlay=" << SETTINGS.inGameOverlay << "\t|\tSETTINGS.debugPrintToConsole=" << SETTINGS.debugPrintToConsole << "\t|\tSETTINGS.debugPrintToConsoleFPS=" << SETTINGS.debugPrintToConsoleFPS << "\n\n";// TODO delete this debug line
 }
 
 void PauseState::pause()
 {
-	std::cout << "PauseState Pause" << std::endl;
 }
 
 void PauseState::resume()
 {
 	restartStateClock();
-	std::cout << "PauseState Resume\t\t\tState Age is: " + std::to_string( getStateAgeAsSeconds() ) + ">>>\n";	// TODO delete this debug line
 }
 
 void PauseState::update()
@@ -92,11 +81,11 @@ void PauseState::update()
 			updateDebugOverlayTextIfEnabled();
 			printConsoleDebugIfEnabled();
 			m_urgentUpdateNeeded = false;
-			std::cout << "Urgent updated!*****\tnew val: " << m_urgentUpdateNeeded << "\n";	// TODO delete this debug line
 		}
 		if ( m_statisticsUpdateTime >= sf::seconds( 1.0f ) ) {
 			if ( m_statisticsNumFrames <= 1 ) {
-				break;	// if we're playing catchup, don't bother with debugOverlayText
+				// if we're playing catchup, don't bother with debugOverlayText
+				break;
 			}
 
 			recordObservedFPS();
@@ -116,7 +105,7 @@ void PauseState::draw()
 	m_window.clear();
 	m_window.draw( m_bg );
 	// debug overlay
-	if ( SETTINGS.inGameOverlay ) {
+	if ( SETTINGS->inGameOverlay ) {
 		m_window.draw( m_statisticsText );
 	}
 	ball->draw( m_window, sf::RenderStates::Default );

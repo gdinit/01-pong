@@ -1,9 +1,8 @@
 /* state.cc */
 
 #include <include/state.h>
-extern Settings SETTINGS;
 
-const sf::Time	State::TimePerFrame = sf::seconds( 1.f / CONFIG_DESIRED_FPS_FLOAT );
+const sf::Time State::TimePerFrame = sf::seconds( 1.f / CONFIG_DESIRED_FPS_FLOAT );
 
 State::State( StateMachine &	machine,
 	sf::RenderWindow &	window,
@@ -27,34 +26,33 @@ bool State::isReplacing()
 void State::toggleDebugShowOverlay()
 {
 	std::string description = "this function does blah";
-	if ( SETTINGS.inGameOverlay == true ) {
-		SETTINGS.inGameOverlay = false;
+	if ( SETTINGS->inGameOverlay == true ) {
+		SETTINGS->inGameOverlay = false;
 		// destroy the text
 		m_statisticsText.setString( "" );
-	} else if ( SETTINGS.inGameOverlay == false ) {
-		SETTINGS.inGameOverlay = true;
+	} else if ( SETTINGS->inGameOverlay == false ) {
+		SETTINGS->inGameOverlay = true;
 		// immediately ugenerate some values
 		updateDebugOverlayTextIfEnabled( true );// give me stats in the first frame, but first make up some plausible values
 	}
-	// SETTINGS.inGameOverlay = !SETTINGS.inGameOverlay;
-	std::cout << "DebugOverlay\t[" << SETTINGS.inGameOverlay << "]\n";
+	std::cout << "DebugOverlay\t[" << SETTINGS->inGameOverlay << "]\n";
 }
 
 void State::toggleDebugConsoleOutput()
 {
-	SETTINGS.debugPrintToConsole = !SETTINGS.debugPrintToConsole;
-	std::cout << "Console debug\t[" << SETTINGS.debugPrintToConsole << "]\n";
+	SETTINGS->debugPrintToConsole = !SETTINGS->debugPrintToConsole;
+	std::cout << "Console debug\t[" << SETTINGS->debugPrintToConsole << "]\n";
 }
 
 void State::toggleDebugDynFPSConsoleOutput()
 {
-	SETTINGS.debugPrintToConsoleFPS = !SETTINGS.debugPrintToConsoleFPS;
-	std::cout << "SETTINGS.debugPrintToConsoleFPS\t[" << SETTINGS.debugPrintToConsoleFPS << "]\n";
+	SETTINGS->debugPrintToConsoleFPS = !SETTINGS->debugPrintToConsoleFPS;
+	std::cout << "debugPrintToConsoleFPS\t[" << SETTINGS->debugPrintToConsoleFPS << "]\n";
 }
 
 void State::updateDebugOverlayTextIfEnabled( bool b )
 {
-	if ( SETTINGS.inGameOverlay ) {
+	if ( SETTINGS->inGameOverlay ) {
 		if ( b ) {
 			// do fabricate the initial values
 			int short	n = CONFIG_DESIRED_FPS_INT;
@@ -71,7 +69,7 @@ void State::updateDebugOverlayTextIfEnabled( bool b )
 void State::updateDebugOverlayTextIfEnabled()
 {
 	// we should not update for `too young` states or it will print values like 13084738473 FPS!
-	if ( SETTINGS.inGameOverlay && ( getStateAgeAsSeconds() >= CONFIG_FPS_OVERLAY_MIN_AGE_TO_UPDATE_SECONDS_INT ) ) {
+	if ( SETTINGS->inGameOverlay && ( getStateAgeAsSeconds() >= CONFIG_FPS_OVERLAY_MIN_AGE_TO_UPDATE_SECONDS_INT ) ) {
 		m_statisticsText.setString( std::to_string( m_statisticsNumFrames ) + " FPS \n" +
 					    std::to_string( m_statisticsUpdateTime.asMicroseconds() / m_statisticsNumFrames ) + "us\n" );
 	}
@@ -79,7 +77,7 @@ void State::updateDebugOverlayTextIfEnabled()
 
 void State::printConsoleDebugIfEnabled()
 {
-	if ( SETTINGS.debugPrintToConsole ) {
+	if ( SETTINGS->debugPrintToConsole ) {
 		std::cout << "FPS: " + std::to_string( m_statisticsNumFrames ) + "\t" +
 			"Time/Update: " + std::to_string( m_statisticsUpdateTime.asMicroseconds() / m_statisticsNumFrames ) + "us\t" +
 			"updateTime: " + std::to_string( m_statisticsUpdateTime.asMicroseconds() ) + "us\n";
@@ -100,12 +98,12 @@ void State::recordObservedFPS()
 		}
 
 		// print all values
-		if ( SETTINGS.debugPrintToConsoleFPS ) {
-			std::cout << "\t<m_observedFPSLastN>: ";// TODO delete this debug line
+		if ( SETTINGS->debugPrintToConsoleFPS ) {
+			std::cout << "\t<m_observedFPSLastN>: ";
 			std::deque <unsigned short int>::iterator it = m_observedFPSLastN.begin();
-			while ( it != m_observedFPSLastN.end() ) {	// TODO delete this debug line
-				std::cout << ' ' << *it++;	// TODO delete this debug line
-			}// TODO delete this debug line
+			while ( it != m_observedFPSLastN.end() ) {
+				std::cout << ' ' << *it++;
+			}
 		}
 	}
 }
@@ -132,20 +130,17 @@ void State::dynamicallyAdjustFPSLimit()
 					m_activeFPSLimit += delta;
 				} else if ( delta == 1 ) {
 					// do nothing = allow 1 FPS delta. trying to fix 1 FPS delta causes more harm than good (i.e.: 2 fps or more fps delta!)
-					if ( SETTINGS.debugPrintToConsoleFPS ) {
-						std::cout << "\t(Delta=1)\tFPSLimit INTACT.\tMedian: " << median << "\t";// TODO delete this debug line
+					if ( SETTINGS->debugPrintToConsoleFPS ) {
+						std::cout << "\t(Delta=1)\tFPSLimit INTACT.\tMedian: " << median << "\t";
 					}
 				}
 				// apply the new frame limit
 				m_window.setFramerateLimit( m_activeFPSLimit );
-				if ( SETTINGS.debugPrintToConsoleFPS ) {
-					std::cout << "\tFPSLimit INCREASED to: " << m_activeFPSLimit << "\tDelta is: " << delta << "\tMedian: " << median << "\t";	// TODO delete this debug line
+				if ( SETTINGS->debugPrintToConsoleFPS ) {
+					std::cout << "\tFPSLimit INCREASED to: " << m_activeFPSLimit << "\tDelta is: " << delta << "\tMedian: " << median << "\t";
 				}
 				// wipe the container
 				m_observedFPSLastN.clear();
-				if ( SETTINGS.debugPrintToConsoleFPS ) {
-					std::cout << "container WIPED!\n";	// TODO delete this debug line
-				}
 			} else if ( median > CONFIG_DESIRED_FPS_INT ) {
 				// our FPS is too high!
 				unsigned short int delta = median - CONFIG_DESIRED_FPS_INT;
@@ -157,25 +152,22 @@ void State::dynamicallyAdjustFPSLimit()
 					m_activeFPSLimit -= delta;
 				} else if ( delta == 1 ) {
 					// do nothing = allow 1 FPS delta. trying to fix 1 FPS delta causes more harm than good (i.e.: 2 fps or more fps delta!)
-					if ( SETTINGS.debugPrintToConsoleFPS ) {
-						std::cout << "\t(Delta=1)\tFPSLimit INTACT.\tMedian: " << median << "\t";// TODO delete this debug line
+					if ( SETTINGS->debugPrintToConsoleFPS ) {
+						std::cout << "\t(Delta=1)\tFPSLimit INTACT.\tMedian: " << median << "\t";
 					}
 				}
 				if ( delta != 1 ) {
 					// apply the new frame limit
 					m_window.setFramerateLimit( m_activeFPSLimit );
-					if ( SETTINGS.debugPrintToConsoleFPS ) {
-						std::cout << "\tFPSLimit REDUCED to: " << m_activeFPSLimit << "\tDelta is: " << delta << "\tMedian: " << median << "\t";// TODO delete this debug line
+					if ( SETTINGS->debugPrintToConsoleFPS ) {
+						std::cout << "\tFPSLimit REDUCED to: " << m_activeFPSLimit << "\tDelta is: " << delta << "\tMedian: " << median << "\t";
 					}
 					// wipe the container
 					m_observedFPSLastN.clear();
-					if ( SETTINGS.debugPrintToConsoleFPS ) {
-						std::cout << "container WIPED!\n";	// TODO delete this debug line
-					}
 				}
 			} else if ( median == CONFIG_DESIRED_FPS_INT ) {
-				if ( SETTINGS.debugPrintToConsoleFPS ) {
-					std::cout << "\t(median==desired)\tFPSLimit INTACT.\tMedian: " << median << "\t";// TODO delete this debug line
+				if ( SETTINGS->debugPrintToConsoleFPS ) {
+					std::cout << "\t(median==desired)\tFPSLimit INTACT.\tMedian: " << median << "\t";
 				}
 			}
 		}
@@ -199,13 +191,12 @@ unsigned short int State::calcMedianFPS( std::deque <unsigned short int> records
 
 void State::restartStateClock()
 {
-	// reset the birthdate
 	m_stateBirthdate.restart();
 
-	// reset the birth date again to (almost) zero out the state age. used for dynFPSadj.
+	// reset the birth date 2nd time to (almost) zero out the state age. used for dynFPSadj
 	m_stateAge = m_stateBirthdate.restart();
 
-	if ( SETTINGS.debugPrintToConsole ) {
+	if ( SETTINGS->debugPrintToConsole ) {
 		std::cout << "Born!\n";
 	}
 }

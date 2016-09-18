@@ -1,10 +1,8 @@
-/* mainmenustate.cc */
+/* main_menu_state.cc */
 
-#include <include/mainmenustate.h>
+#include <include/main_menu_state.h>
 
-MainMenuState::MainMenuState( StateMachine &	machine,
-	sf::RenderWindow &			window,
-	bool					replace )
+MainMenuState::MainMenuState( StateMachine &machine, sf::RenderWindow &window, bool replace )
 	: State{ machine, window, replace }
 {
 	initializeState();
@@ -27,7 +25,7 @@ void MainMenuState::initializeState()
 	m_statisticsText.setPosition( 5.f, 5.f );
 	m_statisticsText.setCharacterSize( 12u );
 	m_statisticsText.setFillColor( sf::Color::White );
-	updateDebugOverlayTextIfEnabled( true );// give me stats in the first frame, but first make up some plausible values
+	updateDebugOverlayTextIfEnabled( true );
 
 	// PressToContinue Text
 	m_fontPressToContinue.loadFromFile( "assets/fonts/sansation.ttf" );
@@ -37,9 +35,6 @@ void MainMenuState::initializeState()
 	m_textPressToContinue.setString( "Press Space Bar to Start a New Game" );
 	centerOrigin( m_textPressToContinue );
 	m_textPressToContinue.setPosition( ( m_worldView.getSize().x / 2 ), ( m_worldView.getSize().y / 2 ) );
-
-	std::cout << "MainMenuState Init\t\t\tState Age is: " + std::to_string( getStateAgeAsSeconds() ) + ">>>\n";	// TODO delete this debug line
-	std::cout << "SETTINGS.inGameOverlay=" << SETTINGS.inGameOverlay << "\t|\tSETTINGS.debugPrintToConsole=" << SETTINGS.debugPrintToConsole << "\t|\tSETTINGS.debugPrintToConsoleFPS=" << SETTINGS.debugPrintToConsoleFPS << "\n\n";// TODO delete this debug line
 }
 
 void MainMenuState::pause()

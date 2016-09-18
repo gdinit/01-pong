@@ -1,16 +1,18 @@
-/* pausestate.h */
+/* play_state.h */
 
-#ifndef PAUSESTATE_H
-#define PAUSESTATE_H
+#ifndef PLAY_STATE_H
+#define PLAY_STATE_H
 
 #include <include/state.h>
-#include <include/statemachine.h>
+#include <include/state_machine.h>
+#include <include/main_menu_state.h>
+#include <include/ingame_menu_state.h>
+#include <include/pause_state.h>
 #include <include/config.h>
-#include <include/globals.h>
 // needed for centerOrigin
 #include <include/utility.h>
-// #include <include/ball.h>
 #include <include/paddle.h>
+#include <include/make_unique.h>
 #include <include/game_objects.h>
 
 #include <SFML/Graphics/Sprite.hpp>
@@ -22,10 +24,11 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
-// TODO delete this debug line
-#include <iostream>
-// for FPS text
+// to in-line document
+// TODO remove this debug only
 #include <string>
+// needed for std::unique_ptr
+#include <memory>
 
 class StateMachine;
 
@@ -34,10 +37,10 @@ namespace sf
 	class RenderWindow;
 }
 
-class PauseState : public State
+class PlayState : public State
 {
 	public:
-		PauseState( StateMachine &	machine,
+		PlayState( StateMachine &	machine,
 		sf::RenderWindow &		window,
 		bool				replace = true );
 		void	initializeState();
@@ -50,13 +53,11 @@ class PauseState : public State
 	private:
 		sf::Texture	m_bgTex;
 		sf::Sprite	m_bg;
-		sf::Font	m_fontPressToContinue;
-		sf::Text	m_textPressToContinue;
-		sf::Font	m_fontPressToContinueLine2;
-		sf::Text	m_textPressToContinueLine2;
+
+		bool		m_nextThrowTowardsRight;
 };
 
-#endif	// PAUSESTATE_H
+#endif	// PLAY_STATE_H
 
 /* EOF */
 

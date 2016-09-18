@@ -1,17 +1,16 @@
-/* menustate.h */
+/* ingame_menu_state.h */
 
-#ifndef MAINMENUSTATE_H
-#define MAINMENUSTATE_H
+#ifndef INGAME_MENU_STATE_H
+#define INGAME_MENU_STATE_H
 
 #include <include/state.h>
-#include <include/playstate.h>
-#include <include/statemachine.h>
+#include <include/state_machine.h>
 #include <include/config.h>
-// needed for centerOrigin
-#include <include/utility.h>
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <include/config.h>
+
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/Font.hpp>
@@ -31,12 +30,10 @@ namespace sf
 	class RenderWindow;
 }
 
-class MainMenuState : public State
+class InGameMenuState : public State
 {
 	public:
-		MainMenuState( StateMachine &	machine,
-		sf::RenderWindow &		window,
-		bool				replace = true );
+		InGameMenuState( StateMachine &machine, sf::RenderWindow &window, bool replace = true );
 		void	initializeState();
 		void	processEvents();
 		void	update();
@@ -47,11 +44,9 @@ class MainMenuState : public State
 	private:
 		sf::Texture	m_bgTex;
 		sf::Sprite	m_bg;
-		sf::Font	m_fontPressToContinue;
-		sf::Text	m_textPressToContinue;
 };
 
-#endif	// MAINMENUSTATE_H
+#endif	// INGAME_MENU_STATE_H
 
 /* EOF */
 

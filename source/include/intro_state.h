@@ -1,11 +1,11 @@
-/* introstate.h */
+/* intro_state.h */
 
-#ifndef INTROSTATE_H
-#define INTROSTATE_H
+#ifndef INTRO_STATE_H
+#define INTRO_STATE_H
 
 #include <include/state.h>
-#include <include/statemachine.h>
-#include <include/playstate.h>
+#include <include/state_machine.h>
+#include <include/play_state.h>
 #include <include/config.h>
 // needed for centerOrigin
 #include <include/utility.h>
@@ -35,9 +35,7 @@ namespace sf
 class IntroState : public State
 {
 	public:
-		IntroState( StateMachine &	machine,
-		sf::RenderWindow &		window,
-		bool				replace = true );
+		IntroState( StateMachine &machine,                sf::RenderWindow &window,                 bool replace = true );
 		void	initializeState();
 		void	processEvents();
 		void	update();
@@ -54,7 +52,7 @@ class IntroState : public State
 		sf::Text		m_textPressToContinue;
 };
 
-#endif	// INTROSTATE_H
+#endif	// INTRO_STATE_H
 
 /* EOF */
 

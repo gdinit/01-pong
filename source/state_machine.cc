@@ -1,12 +1,11 @@
-/* statemachine.cc */
+/* state_machine.cc */
 
-#include <include/statemachine.h>
+#include <include/state_machine.h>
 
 StateMachine::StateMachine()
 	: m_resume{ false }
 	, m_running{ false }
 {
-	std::cout << "StateMachine Init" << std::endl;
 }
 
 void StateMachine::run( std::unique_ptr <State> state )

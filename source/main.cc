@@ -2,10 +2,6 @@
 
 #include <include/main.h>
 
-// create an instance of each to store settings & global vars
-Settings SETTINGS;
-// Globals		GLOBALS;
-
 int main()
 {
 #if defined __APPLE__

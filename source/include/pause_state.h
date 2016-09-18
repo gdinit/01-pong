@@ -1,18 +1,16 @@
-/* playstate.h */
+/* pausestate.h */
 
-#ifndef PLAYSTATE_H
-#define PLAYSTATE_H
+#ifndef PAUSE_STATE_H
+#define PAUSE_STATE_H
 
 #include <include/state.h>
-#include <include/statemachine.h>
-#include <include/mainmenustate.h>
-#include <include/ingamemenustate.h>
-#include <include/pausestate.h>
+#include <include/state_machine.h>
 #include <include/config.h>
+#include <include/globals.h>
 // needed for centerOrigin
 #include <include/utility.h>
+// #include <include/ball.h>
 #include <include/paddle.h>
-#include <include/make_unique.h>
 #include <include/game_objects.h>
 
 #include <SFML/Graphics/Sprite.hpp>
@@ -26,11 +24,8 @@
 
 // TODO delete this debug line
 #include <iostream>
-// to in-line document
-// TODO remove this debug only
+// for FPS text
 #include <string>
-// needed for std::unique_ptr
-#include <memory>
 
 class StateMachine;
 
@@ -39,12 +34,10 @@ namespace sf
 	class RenderWindow;
 }
 
-class PlayState : public State
+class PauseState : public State
 {
 	public:
-		PlayState( StateMachine &	machine,
-		sf::RenderWindow &		window,
-		bool				replace = true );
+		PauseState( StateMachine &machine, sf::RenderWindow &window, bool replace = true );
 		void	initializeState();
 		void	processEvents();
 		void	update();
@@ -55,12 +48,13 @@ class PlayState : public State
 	private:
 		sf::Texture	m_bgTex;
 		sf::Sprite	m_bg;
-
-		// on newRound(), we set the ball throw direction based on this
-		bool		m_nextThrowTowardsRight;
+		sf::Font	m_fontPressToContinue;
+		sf::Text	m_textPressToContinue;
+		sf::Font	m_fontPressToContinueLine2;
+		sf::Text	m_textPressToContinueLine2;
 };
 
-#endif	// PLAYSTATE_H
+#endif	// PAUSE_STATE_H
 
 /* EOF */
 
