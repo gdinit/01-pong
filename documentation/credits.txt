@@ -23,5 +23,5 @@ If you have any comments, correction requests, please let me know.
 	http://www.cplusplus.com/user/JLBorges/
 
 * The following members of SFML Official IRC room deserve a big thank you having assisted the game's development by sharing their technical knowledge:
-	Aster, fallahn, therocode	@ http://chat.sfml-dev.org/
+	Aster, fallahn, therocode, Veltas	@ http://chat.sfml-dev.org/
 
