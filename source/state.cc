@@ -143,7 +143,9 @@ void State::dynamicallyAdjustFPSLimit()
 				}
 				// wipe the container
 				m_observedFPSLastN.clear();
-				std::cout << "container WIPED!\n";	// TODO delete this debug line
+				if ( SETTINGS.debugPrintToConsoleFPS ) {
+					std::cout << "container WIPED!\n";	// TODO delete this debug line
+				}
 			} else if ( median > CONFIG_DESIRED_FPS_INT ) {
 				// our FPS is too high!
 				unsigned short int delta = median - CONFIG_DESIRED_FPS_INT;

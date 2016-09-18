@@ -54,10 +54,7 @@ void Paddle::newRound()
 void Paddle::update( sf::Time timeSinceLastUpdate )
 {
 	if ( this->m_computerControlled ) {
-		float	ballTop = ball->getTop();
 		float	myTop = this->getTop();
-
-		float	ballBottom = ball->getBottom();
 		float	myBottom = this->getBottom();
 
 		float	ballY = ball->getY();
@@ -116,49 +113,19 @@ float Paddle::getBottom() const noexcept
 
 void Paddle::processHumanMovement()
 {
-	// if ( GLOBALS.moveUpRequestActive && !GLOBALS.moveDownRequestActive ) {
 	if ( GLOBALS->moveUpRequestActive ) {
-		// there is non-conflicting MOVE UP request - let's action on it!
-
-		// but is it legal to move up?
 		float myTop = this->getTop();
-		// if ( myTop > SETTINGS.playAreaTopLine ) {
-		// if we move up now, will our top stay within playArea?
-		if ( ( myTop - CONFIG_PADDLE_MOVEMENT_POS_STEP2 ) > SETTINGS.playAreaTopLine ) {
-			// yes legal.
-			// yes we can move now
-			sf::Vector2f moveDistance( ( 0.f ), ( CONFIG_PADDLE_MOVEMENT_NEG_STEP2 ) );
+		if ( ( myTop - CONFIG_PADDLE_MOVEMENT_POS_STEP ) > SETTINGS.playAreaTopLine ) {
+			sf::Vector2f moveDistance( ( 0.f ), ( CONFIG_PADDLE_MOVEMENT_NEG_STEP ) );
 			this->m_shape.move( moveDistance );
-			// we have actioned the request & now can set it to inactive
-			GLOBALS->moveUpRequestActive = false;
-			// std::cout << "\nPaddleHuman::update moved UP with keypress!\t";	// TODO delete this debug line
-		} else {
-			// move up from here is illegal!
-			// std::cout << "\nPaddleHuman::update.\tmove UP requested but illegal!\t";// TODO delete this debug line
-			GLOBALS->moveUpRequestActive = false;
-			// std::cout << "\nPaddleHuman::update.\tmove UP requested but illegal!\tmyTop is: " << myTop << "\t";	// TODO delete this debug line
 		}
-		// std::cout << "Detected and processed a non-conflicting MOVE UP request\n";
-		// } else if ( GLOBALS.moveDownRequestActive && !GLOBALS.moveUpRequestActive ) {
-	} else if ( GLOBALS->moveDownRequestActive ) {
-		// there is non-conflicting MOVE DOWN request - let's action on it!
-
-		// but is it legal to move down?
+	}
+	if ( GLOBALS->moveDownRequestActive ) {
 		float myBottom = this->getBottom();
-		// if we move up now, will our bottom stay within playArea?
-		if ( ( myBottom + CONFIG_PADDLE_MOVEMENT_POS_STEP2 ) < SETTINGS.playAreaBottomLine ) {
-			// yes legal.
-			sf::Vector2f moveDistance( ( 0.f ), ( CONFIG_PADDLE_MOVEMENT_POS_STEP2 ) );
+		if ( ( myBottom + CONFIG_PADDLE_MOVEMENT_POS_STEP ) < SETTINGS.playAreaBottomLine ) {
+			sf::Vector2f moveDistance( ( 0.f ), ( CONFIG_PADDLE_MOVEMENT_POS_STEP ) );
 			this->m_shape.move( moveDistance );
-			// we have actioned the request & now can set it to inactive
-			GLOBALS->moveDownRequestActive = false;
-			// std::cout << "\nPaddleHuman::update moved DOWN with keypress!\t";// TODO delete this debug line
-		} else {
-			// move down from here is illegal!
-			// std::cout << "\nPaddleHuman::update.\tmove DOWN requested but illegal!\t";	// TODO delete this debug line
 		}
-	} else {
-		// std::cout << "PaddleHuman::update.\tLast ELSE detected!\tGLOBALS->moveUpRequestActive is:" << GLOBALS->moveUpRequestActive << ".\tGLOBALS->moveDownRequestActive is: " << GLOBALS->moveDownRequestActive << "\n";// TODO delete this debug line
 	}
 }
 

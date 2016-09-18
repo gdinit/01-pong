@@ -165,14 +165,10 @@ void PlayState::processEvents()
 						m_next = StateMachine::build <MainMenuState> ( m_machine, m_window, true );
 						break;
 					case sf::Keyboard::Up:
-						// std::cout << "PlayState::processEvents TOP.\tGLOBALS->moveUpRequestActive is:" << GLOBALS->moveUpRequestActive << ".\tGLOBALS->moveDownRequestActive is: " << GLOBALS->moveDownRequestActive << "\n";	// TODO delete this debug line
 						GLOBALS->moveUpRequestActive = true;
-						// std::cout << "PlayState::processEvents BOTTOM.\tGLOBALS->moveUpRequestActive is:" << GLOBALS->moveUpRequestActive << ".\tGLOBALS->moveDownRequestActive is: " << GLOBALS->moveDownRequestActive << "\n";// TODO delete this debug line
 						break;
 					case sf::Keyboard::Down:
-						// std::cout << "PlayState::processEvents TOP.\tGLOBALS->moveUpRequestActive is:" << GLOBALS->moveUpRequestActive << ".\tGLOBALS->moveDownRequestActive is: " << GLOBALS->moveDownRequestActive << "\n";	// TODO delete this debug line
 						GLOBALS->moveDownRequestActive = true;
-						// std::cout << "PlayState::processEvents BOTTOM.\tGLOBALS->moveUpRequestActive is:" << GLOBALS->moveUpRequestActive << ".\tGLOBALS->moveDownRequestActive is: " << GLOBALS->moveDownRequestActive << "\n";// TODO delete this debug line
 						break;
 					case sf::Keyboard::F2:
 						this->toggleDebugShowOverlay();
@@ -186,19 +182,21 @@ void PlayState::processEvents()
 					default:
 						break;
 				}
-				/*
-				case sf::Event::KeyReleased:
-				        switch ( evt.key.code ) {
-				                case sf::Keyboard::Up:
-				                        GLOBALS->moveUpRequestActive = false;
-				                        break;
-				                case sf::Keyboard::Down:
-				                        GLOBALS->moveDownRequestActive = false;
-				                        break;
-				                default:
-				                        break;
-				        }
-				*/
+				break;
+			case sf::Event::KeyReleased:
+				switch ( evt.key.code ) {
+					case sf::Keyboard::Up:
+						GLOBALS->moveUpRequestActive = false;
+						break;
+					case sf::Keyboard::Down:
+						GLOBALS->moveDownRequestActive = false;
+						break;
+					default:
+						break;
+				}
+				break;
+			default:
+				break;
 		}
 	}
 }

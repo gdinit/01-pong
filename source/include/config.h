@@ -42,8 +42,6 @@ constexpr float			CONFIG_PADDLE_SLOWER_COMPUTER { 0.3f };
 constexpr float			CONFIG_PADDLE_SLOWER_HUMAN { 0.5f };
 constexpr float			CONFIG_PADDLE_MOVEMENT_POS_STEP { +4.f };
 constexpr float			CONFIG_PADDLE_MOVEMENT_NEG_STEP { -4.f };
-constexpr float			CONFIG_PADDLE_MOVEMENT_POS_STEP2 { +5.f };
-constexpr float			CONFIG_PADDLE_MOVEMENT_NEG_STEP2 { -5.f };
 constexpr float			CONFIG_PADDLE_LEFT_SPAWN_X { CONFIG_WIN_WIDTH - 50 };
 constexpr float			CONFIG_PADDLE_LEFT_SPAWN_Y { CONFIG_WIN_HEIGHT / 2 };
 
