@@ -1,0 +1,27 @@
+In random order.
+If you have any comments, correction requests, please let me know.
+
+
+* This game is built on SFML the very awesome Simple and Fast Multimedia Library
+	http://www.sfml-dev.org/ Copyright © Laurent Gomila
+
+* Game Engine functionality built on 'Small Game Engine' programmed by Lukas 'eXpl0it3r' Dürrenberger
+	https://github.com/eXpl0it3r/SmallGameEngine
+
+* Lukas's code is based on original code by Anthony Lewis 
+	http://gamedevgeek.com/tutorials/managing-game-states-in-c/ & http://anthonylewis.com/about/
+
+* Sansation font by Bernd Montag
+	https://www.planet-typography.com/download/typo-sansation.html
+
+* utility.h > setOrigin method by authors of the book 'SFML Game Development': by Jan Haller (Author), Henrik Vogelius Hansson (Author), Artur Moreira (Author)
+	https://www.amazon.co.uk/SFML-Game-Development-Jan-Haller/dp/1849696845
+	https://github.com/SFML/SFML-Game-Development-Book
+	Note: great book! buy it! :)
+
+* make_unique.h by JLBorges at cplusplus.com forums
+	http://www.cplusplus.com/user/JLBorges/
+
+* The following members of SFML Official IRC room deserve a big thank you having assisted the game's development by sharing their technical knowledge:
+	Aster, fallahn, therocode	@ http://chat.sfml-dev.org/
+
