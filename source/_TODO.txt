@@ -1,0 +1,47 @@
+// -----------------------------------------------------------------------------
+// MISSING ---------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+-sound
+-scoreboard system
+-actual scoring system and `update scoreboard` call
+-menus
+	-main menu	start a new game, options
+	-options menu	resolution, full screen on/off, mute on/off, sound level 0 - 20 steps. key bindings (display / change)
+-demo play AI vs AI on launch
+-comment out the debug couts everywhere
+-add side indicator with "computer" & "human" icons
+-add a layout:	on round start (as a reminder) showing the currently active control keys
+
+// -----------------------------------------------------------------------------
+// KNOWN ISSUES ----------------------------------------------------------------
+// -----------------------------------------------------------------------------
+-there's a delay between keypress and initial movement of playerPaddle
+-FPS sometimes shows 10000000. perhaps "if stateAge is young, and observedFPS is too high" we should just discard it?
+
+
+// -----------------------------------------------------------------------------
+// ENHANCEMENT -----------------------------------------------------------------
+// -----------------------------------------------------------------------------
+-add ability to toggle FullScreen at runtime (F11)
+-in the intro picture, make the Pong on the computer screen look like the real one
+-add pong namespace in every file
+-add std everywhere and lose the `using namespace std` at top of each file
+-wrap all if(debug)s in ifdefs & use a master on/off switch in config.h
+
+
+
+/// -----------------------------------------------------------------------------
+/ FIXED, COMPLETED, DONE, CANCELLED ---------------------------------------------
+// ------------------------------------------------------------------------------
++on introstate, when Q is pressed game quits as expected but then it respawns a second instance! (pressing Q 2nd time terminates successfully)
+	^^ this is happening on Windows and it is not an issue on Mac!
++game paused screen fps calculation not running
+-when you quickly pause/unpause the game, every time you pause/unpause, another 60fps is being added. 5x pause unpause accumulate 300fps
++reflection from bottom/top lines of screen
++move the debugOverlay, consoleDebug etc. to global bools
++in pausestate, simply put the GAME PAUSED text on top. keep the ball/paddles/score still visible.
++fix the shadow!
++paddles
++settings struct & SETTINGS global instance (thus game settings visible in every file)
++AI response logic
++when return to mainmenu ball is not destroyed & new round no ball!

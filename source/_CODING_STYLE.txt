@@ -1,0 +1,43 @@
+////////////////////
+// THIS IS WIP...
+////////////////////
+
+
+// GENERAL / MISC
+- Try to get as close as possible to 100% uncrustify enforcing - as it works every single time 24/7/365.
+- Use tabs to indent, not spaces. Tabs are 8-character long.
+- Use Every single condition MUST be braced, like so:
+	unless (q) return;	/* NOT OK */
+	unless (q)
+		return;		/* not OK "}" */
+	unless (q) {		/* OK */
+		return;
+	}
+
+
+// FILENAMES
+- source code filenames end in .cc
+- header filenames end in .h
+- inline filenames end in .inl
+- filenames do not contain '-' or '_' between words.	e.g.: ingamemenustate.cc
+
+
+// NAMING, CASING
+- Do use PascalCasing for class names		e.g.: class InGameMenuState : public State
+- Prefix class data member names with "m_".		e.g.: m_memberName
+- Use all upper case for configuration definitions. (defined in 'config.h' and used everywhere).		e.g.: CONFIG_DESIRED_FPS_INT
+- Do use camelCasing for member variables:	
+- Do use camelCasing for parameters
+- Do use camelCasing for local variables
+- Do use camelCasing for function names
+
+
+// COMMENTS
+- All comments should be above the code. Never on the right side, never after the code. 
+  Note: there are still right-side comments, standardization WIP!
+- Do note that Javadocs and Doxygen style are also catering to automatic generation of documentation in mind. What they encouraged is usually fine.
+- Code Complete advice:
+	* Comments should describe why, not what you are doing
+	* Comments should be in a form easy to maintain and type out. No fanciful ascii header and art please!
+
+
