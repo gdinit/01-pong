@@ -1,23 +1,20 @@
 // -----------------------------------------------------------------------------
 // MISSING ---------------------------------------------------------------------
 // -----------------------------------------------------------------------------
--make Settings unique ptr
--change filenames to underscore standard
--scoreboard system, just two numbers --> leftPlayer & rightPlayer score
--sound
--actual scoring system and `update scoreboard` call
+-add randomish throw & randomish speed (newround kickoff function)
+-add scoring system [detect goal + update scoreboardl
+-sound	1. collision sound 2. goal sound
 -menus
 	-main menu	start a new game, options
 	-options menu	resolution, full screen on/off, mute on/off, sound level 0 - 20 steps. key bindings (display / change)
 -demo play AI vs AI on launch
--comment out the debug couts everywhere
 -add side indicator with "computer" & "human" icons
--add a layout:	on round start (as a reminder) showing the currently active control keys
+-add visual aid: on round start (as a reminder) show the currently active control keys
 
 // -----------------------------------------------------------------------------
 // KNOWN ISSUES ----------------------------------------------------------------
 // -----------------------------------------------------------------------------
--there's a delay between keypress and initial movement of playerPaddle
+-when a movement key is held down, after ~1 second, movement speed slows down & object shakes
 -FPS sometimes shows 10000000. perhaps "if stateAge is young, and observedFPS is too high" we should just discard it?
 
 
@@ -33,7 +30,7 @@
 
 
 /// -----------------------------------------------------------------------------
-/ FIXED, COMPLETED, DONE, CANCELLED ---------------------------------------------
+/ FIXED / COMPLETED / DONE / CANCELLED ------------------------------------------
 // ------------------------------------------------------------------------------
 +on introstate, when Q is pressed game quits as expected but then it respawns a second instance! (pressing Q 2nd time terminates successfully)
 	^^ this is happening on Windows and it is not an issue on Mac!
@@ -47,3 +44,8 @@
 +settings struct & SETTINGS global instance (thus game settings visible in every file)
 +AI response logic
 +when return to mainmenu ball is not destroyed & new round no ball!
++make Settings unique ptr
++change filenames to underscore standard
++scoreboard system, just two numbers --> leftPlayer & rightPlayer score
++comment out the debug couts everywhere
++there's a delay between keypress and initial movement of playerPaddle
