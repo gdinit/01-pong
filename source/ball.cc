@@ -5,6 +5,8 @@
 extern std::unique_ptr <Settings>	SETTINGS;
 extern std::unique_ptr <Globals>	GLOBALS;
 extern std::unique_ptr <Ball>		ball;
+extern std::unique_ptr <Paddle>		paddleRight;
+extern std::unique_ptr <Paddle>		paddleLeft;
 
 Ball::Ball()
 {
@@ -31,27 +33,90 @@ Ball::~Ball()
 
 void Ball::newRound( bool throwTowardsRightSide )
 {
+	// TODO: generate random throw angle towards last round's loser (limited randomness, within parameters)
+	// TODO: generate random speed   (limited randomness, within parameters)
+
+	// TODO delete this test hardcode <-- ALWAYS THROW LEFT
+	throwTowardsRightSide = false;
+
 	sf::Vector2f	centreOfScreen;
 	centreOfScreen.x = SETTINGS->currentScreenSizeWidth / 2;
 	centreOfScreen.y = SETTINGS->currentScreenSizeHeight / 2;
-
 	this->m_shape.setPosition( centreOfScreen );
 
-	// give the initial test push // TODO replace me with random direction & speed generator
-	sf::Vector2f	vel;
-	vel.x = 1;
-	vel.y = -1;
-	this->m_velocity = vel;
+	sf::Vector2f	ballPos = centreOfScreen;
 
-	// TODO
-	// move ball to centre of screen //shape.setPosition( mX, mY );
-	// generate random direction towards throwTarget (within parameters)
-	// generate random speed  (within parameters)
-	// (random-ish speed towards the throwTarget
+	sf::Vector2f	targetPos;
+	if ( throwTowardsRightSide ) {
+		targetPos.x = paddleRight->getX();
+		targetPos.y = paddleRight->getY();
+	} else {
+		targetPos.x = paddleLeft->getX();
+		targetPos.y = paddleLeft->getY();
+	}
+
+	sf::Vector2f ballNewVel;
+	// ballNewVel.x = ( targetPos.x - ballPos.x );
+	// ballNewVel.y = ( targetPos.y - ballPos.y );
+	ballNewVel.x = ( targetPos.x - ballPos.x ) / 1000;
+	ballNewVel.y = ( targetPos.y - ballPos.y ) / 1000;
+
+	////////////////////////////////////////////////////////////
+	// speed test: multiply speed by 3
+	//
+	// ballNewVel.x *= 3;
+	// ballNewVel.y *= 3;
+	////////////////////////////////////////////////////////////
+	// throw direction tests
+	//
+	// throw towards:	top left
+	// ballNewVel.x = -1;
+	// ballNewVel.y = -0.7216;
+	//
+	// throw towards:	bottom left
+	// ballNewVel.x = -1;
+	// ballNewVel.y = 0.7216;
+	//
+	// throw towards:	top right
+	// ballNewVel.x = 1;
+	// ballNewVel.y = -0.7216;
+
+	// throw towards:	bottom right
+	// ballNewVel.x = 1;
+	// ballNewVel.y = 0.7216;
+	////////////////////////////////////////////////////////////
+
+	ballNewVel.x = 1;
+	ballNewVel.y = 0.7216;
+
+	std::cout << "AFTER DIVISION ballNewVel is: " << std::to_string( ballNewVel.x ) << "," << std::to_string( ballNewVel.y ) << "\n";// TODO delete this debug line
+	std::cout << "ballPos is: " << std::to_string( ballPos.x ) << "," << std::to_string( ballPos.y ) << "\n";// TODO delete this debug line
+	std::cout << "throwTowardsRightSide is: " << throwTowardsRightSide << "\ttargetPos is: " << std::to_string( targetPos.x ) << "," << std::to_string( targetPos.y ) << "\n";	// TODO delete this debug line
+	std::cout << "ballNewVel is: " << std::to_string( ballNewVel.x ) << "," << std::to_string( ballNewVel.y ) << "\n";	// TODO delete this debug line
+
+	// TODO generate slightly randomized ball direction towards throwTarget, within parameters = max variance is 45 degrees to either way (up/down)
+	/*
+	        to find the length:
+
+	        |V| = sqrt(4 2ndpower+3 2ndpower) = sqrt(25) = 5
+	        int ballNewVelx2nd = ballNewVel.x * ballNewVel.x;
+	        int ballNewVely2nd = ballNewVel.y * ballNewVel.y;
+	        int ballNewVelxy2ndsum = ballNewVelx2nd + ballNewVely2nd;
+	        cout << ballNewVelxy2ndsum << endl;
+	*/
+	float	ballNewVelMagnitudeSquared = magnitudeSquared( ballNewVel.x, ballNewVel.y );
+	float	ballNewVelMagnitude = magnitude( ballNewVel.x, ballNewVel.y );
+	std::cout << "***** ballNewVelMagnitudeSquared: " << ballNewVelMagnitudeSquared << std::endl;
+	std::cout << "***** ballNewVelMagnitude: " << ballNewVelMagnitude << std::endl;
+	// int randomVal = 45;
+	// ballNewVel.y += randomVal;
+	this->m_velocity = ballNewVel;
 }
 
 void Ball::update( sf::Time timeSinceLastUpdate )
 {
+	std::cout << "(Pre-Update) ballPos is: " << std::to_string( this->getX() ) << "," << std::to_string( this->getY() ) << "\n";	// TODO delete this debug line
+
 	// BOUNCE BACK IF NECESSARY
 	if ( this->getTop() <= SETTINGS->playAreaTopLine ) {
 		this->m_velocity = -( this->m_velocity );

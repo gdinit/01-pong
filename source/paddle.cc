@@ -30,15 +30,19 @@ void Paddle::newRound()
 {
 	// reset paddle positions
 	if ( this->m_thisIsRightPaddle ) {
-		this->m_shape.setPosition( ( SETTINGS->currentScreenSizeWidth - SETTINGS->paddleIndent ), SETTINGS->currentScreenSizeHeight / 2 );
+		// this->m_shape.setPosition( ( SETTINGS->currentScreenSizeWidth - SETTINGS->paddleIndent ), SETTINGS->currentScreenSizeHeight / 2 );
+		this->m_shape.setPosition( ( SETTINGS->currentScreenSizeWidth - SETTINGS->paddleIndent ), 74 );	// TODO delete this test hardcode
 	} else {
-		this->m_shape.setPosition( SETTINGS->paddleIndent, SETTINGS->currentScreenSizeHeight / 2 );
+		// this->m_shape.setPosition( SETTINGS->paddleIndent, SETTINGS->currentScreenSizeHeight / 2 );
+		this->m_shape.setPosition( SETTINGS->paddleIndent, 133 );// TODO delete this test hardcode
 	}
 }
 
 void Paddle::update( sf::Time timeSinceLastUpdate )
 {
 	if ( this->m_computerControlled ) {
+		// TODO  delete this debug comment out of AI
+		/*
 		float	myTop = this->getTop();
 		float	myBottom = this->getBottom();
 
@@ -47,13 +51,12 @@ void Paddle::update( sf::Time timeSinceLastUpdate )
 
 		// do Computer-Player stuff here
 		if ( ( ballY < myY ) && ( myTop > SETTINGS->playAreaTopLine ) ) {
-			sf::Vector2f moveDistance( ( 0.f ), ( moveDistance.y = CONFIG_PADDLE_MOVEMENT_NEG_STEP ) );
-			this->m_shape.move( moveDistance );
+		        sf::Vector2f moveDistance( ( 0.f ), ( moveDistance.y = CONFIG_PADDLE_MOVEMENT_NEG_STEP ) );
+		        this->m_shape.move( moveDistance );
 		} else if ( ( ballY > myY ) && ( myBottom < SETTINGS->playAreaBottomLine ) ) {
-			sf::Vector2f moveDistance( ( 0.f ), ( moveDistance.y = CONFIG_PADDLE_MOVEMENT_POS_STEP ) );
-			this->m_shape.move( moveDistance );
-		} else {
-		}
+		        sf::Vector2f moveDistance( ( 0.f ), ( moveDistance.y = CONFIG_PADDLE_MOVEMENT_POS_STEP ) );
+		        this->m_shape.move( moveDistance );
+		*/
 	} else {
 		// do Human-Player stuff here
 		processHumanMovement();

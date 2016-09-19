@@ -4,8 +4,14 @@
 #define BALL_H
 
 #include <include/config.h>
+#include <include/paddle.h>
+#include <include/utility.h>
+#include <include/vector2d.h>
 
 #include <SFML/Graphics.hpp>
+
+// TODO delete this debug only line
+#include <iostream>
 
 class Ball : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {

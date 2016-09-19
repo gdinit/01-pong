@@ -112,18 +112,13 @@ void PlayState::draw()
 {
 	m_window.clear();
 	m_window.draw( m_bg );
-
-	// debug overlay
 	if ( SETTINGS->inGameOverlay ) {
 		m_window.draw( m_statisticsText );
 	}
-
 	ball->draw( m_window, sf::RenderStates::Default );
 	paddleRight->draw( m_window, sf::RenderStates::Default );
 	paddleLeft->draw( m_window, sf::RenderStates::Default );
 	scoreboard->draw( m_window, sf::RenderStates::Default );
-
-	// finally, display the updated window
 	m_window.display();
 }
 
