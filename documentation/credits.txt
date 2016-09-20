@@ -22,6 +22,14 @@ If you have any comments, correction requests, please let me know.
 * make_unique.h by JLBorges at cplusplus.com forums
 	http://www.cplusplus.com/user/JLBorges/
 
-* The following members of SFML Official IRC room deserve a big thank you having assisted the game's development by sharing their technical knowledge:
-	Aster, fallahn, therocode, Veltas	@ http://chat.sfml-dev.org/
+* The following members of SFML Official IRC room deserve a big thank you for having assisted the game's development by sharing their technical knowledge:
+	In order of consultation date
+	Aster
+	fallahn
+	therocode
+	Veltas
+	noob_prodigy
+	Jonny
+	Rosme
+	@ http://chat.sfml-dev.org/
 
