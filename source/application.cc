@@ -41,13 +41,23 @@ void Application::loadSettings()
 	SETTINGS->paddleIndent = CONFIG_PADDLE_INDENT;
 	SETTINGS->playAreaTopLine = CONFIG_PLAY_AREA_INDENT_TOP;
 	SETTINGS->playAreaBottomLine = CONFIG_WIN_HEIGHT - CONFIG_PLAY_AREA_INDENT_BOTTOM;
-	SETTINGS->ballSlower = CONFIG_BALL_SLOWER;
-	SETTINGS->paddleSlowerComputer = CONFIG_PADDLE_SLOWER_COMPUTER;
-	SETTINGS->paddleSlowerHuman = CONFIG_PADDLE_SLOWER_HUMAN;
+
+	// SETTINGS->paddleSlowerComputer = CONFIG_PADDLE_SLOWER_COMPUTER;
+	// SETTINGS->paddleSlowerHuman = CONFIG_PADDLE_SLOWER_HUMAN;
+	SETTINGS->paddleSpeedComputer = CONFIG_PADDLE_SPEED_COMPUTER;
+	SETTINGS->paddleSpeedHuman = CONFIG_PADDLE_SPEED_HUMAN;
+	// SETTINGS->ballSlower = CONFIG_BALL_SPEED;
+	SETTINGS->ballSpeed = CONFIG_BALL_SPEED;
+
 	SETTINGS->currentScreenSizeWidth = CONFIG_WIN_WIDTH;
 	SETTINGS->currentScreenSizeHeight = CONFIG_WIN_HEIGHT;
 	SETTINGS->sideRightIsComputer = CONFIG_SIDE_RIGHT_IS_COMPUTER;
 	SETTINGS->sideLeftIsComputer = CONFIG_SIDE_LEFT_IS_COMPUTER;
+	SETTINGS->sideRightSpawnX = CONFIG_PADDLE_RIGHT_SPAWN_X;
+	SETTINGS->sideRightSpawnY = CONFIG_PADDLE_RIGHT_SPAWN_Y;
+	SETTINGS->sideLeftSpawnX = CONFIG_PADDLE_LEFT_SPAWN_X;
+	SETTINGS->sideLeftSpawnY = CONFIG_PADDLE_LEFT_SPAWN_Y;
+
 	if ( SETTINGS->debugPrintToConsole ) {
 		std::cout << "Configuration values loaded into SETTINGS by Application::loadSettings() [" << this << "] \n";
 	}

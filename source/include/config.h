@@ -38,10 +38,16 @@ constexpr bool			CONFIG_DEBUG_DYNFPS_CONSOLE_OUTPUT { true };
 constexpr float			CONFIG_PADDLE_INDENT { 99.f };
 constexpr float			CONFIG_PADDLE_WIDTH { 7.f };
 constexpr float			CONFIG_PADDLE_HEIGHT { 24.f };
-constexpr float			CONFIG_PADDLE_SLOWER_COMPUTER { 0.3f };
-constexpr float			CONFIG_PADDLE_SLOWER_HUMAN { 0.5f };
+
+// constexpr float			CONFIG_PADDLE_SLOWER_COMPUTER { 0.3f };
+// constexpr float			CONFIG_PADDLE_SLOWER_HUMAN { 0.5f };
+constexpr float			CONFIG_PADDLE_SPEED_COMPUTER { 1.f };
+constexpr float			CONFIG_PADDLE_SPEED_HUMAN { 1.f };
+
 constexpr float			CONFIG_PADDLE_MOVEMENT_POS_STEP { +4.f };
 constexpr float			CONFIG_PADDLE_MOVEMENT_NEG_STEP { -4.f };
+constexpr float			CONFIG_PADDLE_RIGHT_SPAWN_X { 50 };
+constexpr float			CONFIG_PADDLE_RIGHT_SPAWN_Y { CONFIG_WIN_HEIGHT / 2 };
 constexpr float			CONFIG_PADDLE_LEFT_SPAWN_X { CONFIG_WIN_WIDTH - 50 };
 constexpr float			CONFIG_PADDLE_LEFT_SPAWN_Y { CONFIG_WIN_HEIGHT / 2 };
 
@@ -50,7 +56,8 @@ constexpr float			CONFIG_BALL_WIDTH { 7.f };
 constexpr float			CONFIG_BALL_HEIGHT { 7.f };
 constexpr float			CONFIG_BALL_SPAWN_POS { -100.f };
 constexpr float			CONFIG_BALL_ONHIT_ACCELERATION { 1.f };
-constexpr float			CONFIG_BALL_SLOWER { 0.3f };
+// constexpr float			CONFIG_BALL_SLOWER { 0.3f };
+constexpr float			CONFIG_BALL_SPEED { 1.f };
 
 // PLAY AREA
 constexpr float			CONFIG_PLAY_AREA_INDENT_TOP { 30.f };

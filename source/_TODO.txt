@@ -1,15 +1,23 @@
 // -----------------------------------------------------------------------------
 // MISSING ---------------------------------------------------------------------
 // -----------------------------------------------------------------------------
--add randomish throw & randomish speed (newround kickoff function)
+-cleanup and complete newround initial random throw target on new round code
+-add random speed to newround initial random throw 
+-add collision detection and response (bounce back from top/bottom && paddles)
+-add slight bounce direction randomization to paddle-collision only (no randomization on top/bottom wall hit)
 -add scoring system [detect goal + update scoreboardl
 -sound	1. collision sound 2. goal sound
+-add version information to the main menu and pause screen
 -menus
 	-main menu	start a new game, options
 	-options menu	resolution, full screen on/off, mute on/off, sound level 0 - 20 steps. key bindings (display / change)
 -demo play AI vs AI on launch
 -add side indicator with "computer" & "human" icons
 -add visual aid: on round start (as a reminder) show the currently active control keys
+-add a video intro using black & white original programmers demonstrating the game
+-create a credits screen, auto text scroll
+-add original programmer name & picture to credits screen
+-add technical consultants to credits screen
 
 // -----------------------------------------------------------------------------
 // KNOWN ISSUES ----------------------------------------------------------------
@@ -49,3 +57,4 @@
 +scoreboard system, just two numbers --> leftPlayer & rightPlayer score
 +comment out the debug couts everywhere
 +there's a delay between keypress and initial movement of playerPaddle
++need to calc magnitute
