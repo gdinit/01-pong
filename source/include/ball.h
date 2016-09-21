@@ -12,6 +12,10 @@
 
 // TODO delete this debug only line
 #include <iostream>
+// required for RNG
+#include <random>
+// required for RNG
+#include <chrono>
 
 class Ball : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {

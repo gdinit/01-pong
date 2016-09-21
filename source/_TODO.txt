@@ -1,11 +1,7 @@
-// -----------------------------------------------------------------------------
 // MISSING ---------------------------------------------------------------------
-// -----------------------------------------------------------------------------
--cleanup and complete newround initial random throw target on new round code
--add random speed to newround initial random throw 
--add collision detection and response (bounce back from top/bottom && paddles)
--add slight bounce direction randomization to paddle-collision only (no randomization on top/bottom wall hit)
--add scoring system [detect goal + update scoreboardl
+-add collision detection and response: bounce back from paddles (with bounce direction slight randomization)
+-add collision detection and response: goal from left & right sides
+-add scoring system [detect goal + update scoreboard]
 -sound	1. collision sound 2. goal sound
 -add version information to the main menu and pause screen
 -menus
@@ -19,16 +15,12 @@
 -add original programmer name & picture to credits screen
 -add technical consultants to credits screen
 
-// -----------------------------------------------------------------------------
 // KNOWN ISSUES ----------------------------------------------------------------
-// -----------------------------------------------------------------------------
 -when a movement key is held down, after ~1 second, movement speed slows down & object shakes
 -FPS sometimes shows 10000000. perhaps "if stateAge is young, and observedFPS is too high" we should just discard it?
 
 
-// -----------------------------------------------------------------------------
 // ENHANCEMENT -----------------------------------------------------------------
-// -----------------------------------------------------------------------------
 -add ability to toggle FullScreen at runtime (F11)
 -in the intro picture, make the Pong on the computer screen look like the real one
 -add pong namespace in every file
@@ -36,10 +28,7 @@
 -wrap all if(debug)s in ifdefs & use a master on/off switch in config.h
 
 
-
-/// -----------------------------------------------------------------------------
 / FIXED / COMPLETED / DONE / CANCELLED ------------------------------------------
-// ------------------------------------------------------------------------------
 +on introstate, when Q is pressed game quits as expected but then it respawns a second instance! (pressing Q 2nd time terminates successfully)
 	^^ this is happening on Windows and it is not an issue on Mac!
 +game paused screen fps calculation not running
@@ -58,3 +47,6 @@
 +comment out the debug couts everywhere
 +there's a delay between keypress and initial movement of playerPaddle
 +need to calc magnitute
++cleanup and complete newround initial random throw target on new round code
++add random speed to newround initial random throw 
++add collision detection and response: bounce back from top/bottom (without bounce direction randomization)
