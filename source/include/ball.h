@@ -31,15 +31,17 @@ class Ball : public sf::Transformable, public sf::Drawable, private sf::NonCopya
 		float	getY()       const noexcept;
 		float	getTop()     const noexcept;
 		float	getBottom()  const noexcept;
+		float	getLeft()    const noexcept;
+		float	getRight()   const noexcept;
+		// void	collisionDetectRespond( Paddle &objPaddle, Ball &objBall ) noexcept;
+		// need to be private to process in ball.cc
+		sf::Vector2f		m_velocity;
 
 	protected:
 
 	private:
 
 		sf::RectangleShape	m_shape;
-		float			m_cfg_acceleration_val;
-		sf::Vector2f		m_acceleration;
-		sf::Vector2f		m_velocity;
 		sf::Vector2f		m_position;
 };
 
@@ -47,3 +49,4 @@ class Ball : public sf::Transformable, public sf::Drawable, private sf::NonCopya
 
 /* EOF */
 
+	

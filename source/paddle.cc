@@ -22,9 +22,7 @@ Paddle::Paddle( bool thisIsRightPaddle )
 	this->m_shape.setOrigin( CONFIG_PADDLE_WIDTH / 2.f, CONFIG_PADDLE_HEIGHT / 2.f );
 }
 
-Paddle::~Paddle()
-{
-}
+Paddle::~Paddle() {}
 
 void Paddle::newRound()
 {
@@ -63,29 +61,19 @@ void Paddle::update( sf::Time timeSinceLastUpdate )
 	}
 }
 
-void Paddle::draw( sf::RenderTarget &target, sf::RenderStates states ) const {
-	target.draw( m_shape );
-}
+void Paddle::draw( sf::RenderTarget &target, sf::RenderStates states ) const { target.draw( m_shape ); }
 
-float Paddle::getX() const noexcept
-{
-	return m_shape.getPosition().x;
-}
+float Paddle::getX() const noexcept { return m_shape.getPosition().x; }
 
-float Paddle::getY() const noexcept
-{
-	return m_shape.getPosition().y;
-}
+float Paddle::getY() const noexcept { return m_shape.getPosition().y; }
 
-float Paddle::getTop() const noexcept
-{
-	return getY() - m_shape.getSize().y / 2.f;
-}
+float Paddle::getTop() const noexcept { return getY() - m_shape.getSize().y / 2.f; }
 
-float Paddle::getBottom() const noexcept
-{
-	return getY() + m_shape.getSize().y / 2.f;
-}
+float Paddle::getBottom() const noexcept { return getY() + m_shape.getSize().y / 2.f; }
+
+float Paddle::getLeft()    const noexcept { return getX() - m_shape.getSize().x / 2.f; }
+
+float Paddle::getRight()   const noexcept { return getX() + m_shape.getSize().x / 2.f; }
 
 void Paddle::processHumanMovement()
 {

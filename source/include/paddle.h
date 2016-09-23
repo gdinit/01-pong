@@ -27,6 +27,8 @@ class Paddle : public sf::Transformable, public sf::Drawable, private sf::NonCop
 		float		getY()       const noexcept;
 		float		getTop()     const noexcept;
 		float		getBottom()  const noexcept;
+		float		getLeft()    const noexcept;
+		float		getRight()   const noexcept;
 		void		moveUp();
 		void		moveDown();
 
@@ -40,7 +42,6 @@ class Paddle : public sf::Transformable, public sf::Drawable, private sf::NonCop
 
 	private:
 		sf::RectangleShape	m_shape;
-		sf::Vector2f		m_acceleration;
 		sf::Vector2f		m_position;
 };
 

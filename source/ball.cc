@@ -15,20 +15,41 @@ Ball::Ball()
 	m_shape.setOrigin( CONFIG_BALL_WIDTH / 2.f, CONFIG_BALL_HEIGHT / 2.f );
 	m_shape.setSize( { CONFIG_BALL_WIDTH, CONFIG_BALL_HEIGHT } );
 
-	// each hit will accelerate the ball this much
-	m_cfg_acceleration_val = CONFIG_BALL_ONHIT_ACCELERATION;
-
-	// no hits so far, thus the acceleration is zero
-	m_acceleration.x = 0.f;
-	m_acceleration.y = 0.f;
-
 	// no hits so far, thus the velocity is zero
 	m_velocity.x = 0.f;
 	m_velocity.y = 0.f;
 }
 
-Ball::~Ball()
+Ball::~Ball() {}
+
+template<class T1, class T2>
+
+bool isIntersecting( T1 &objA, T2 &objB ) noexcept
 {
+	return objA->getRight() >= objB->getLeft() &&
+	       objA->getLeft() <= objB->getRight() &&
+	       objA->getBottom() >= objB->getTop() &&
+	       objA->getTop() <= objB->getBottom();
+}
+
+void collisionDetectRespond( std::unique_ptr <Paddle> &objPaddle, std::unique_ptr <Ball>  &objBall ) noexcept
+//void collisionDetectRespond( Paddle &objPaddle, Ball &objBall ) noexcept
+{
+	if ( !isIntersecting( objPaddle, objBall ) ) {
+		// no collision.
+		return;
+	}
+
+	// a collision has occurred. reverse the left<->right travel direction
+	objBall->m_velocity.x = -objBall->m_velocity.x;
+
+	if ( objBall->getX() < objPaddle->getX() ) {
+		// ball hit paddleRight
+		std::cout << "Ball hit paddleRight!\n";
+	} else {
+		// ball hit paddleLeft
+		std::cout << "Ball hit paddleLeft!\n";
+	}
 }
 
 void Ball::newRound( bool throwTowardsRightSide )
@@ -68,6 +89,9 @@ void Ball::newRound( bool throwTowardsRightSide )
 
 void Ball::update( sf::Time timeSinceLastUpdate )
 {
+	collisionDetectRespond( paddleLeft, ball );
+	collisionDetectRespond( paddleRight, ball );
+
 	// std::cout << "(Pre-Update) ballPos is: " << std::to_string( this->getX() ) << "," << std::to_string( this->getY() ) << "\n";	// TODO delete this debug line
 
 	// bounce back if necessary
@@ -87,29 +111,19 @@ void Ball::update( sf::Time timeSinceLastUpdate )
 	this->m_shape.move( moveDistance );
 }
 
-void Ball::draw( sf::RenderTarget &target, sf::RenderStates states ) const {
-	target.draw( this->m_shape );
-}
+void Ball::draw( sf::RenderTarget &target, sf::RenderStates states ) const { target.draw( this->m_shape ); }
 
-float Ball::getX() const noexcept
-{
-	return m_shape.getPosition().x;
-}
+float Ball::getX() const noexcept { return m_shape.getPosition().x; }
 
-float Ball::getY() const noexcept
-{
-	return m_shape.getPosition().y;
-}
+float Ball::getY() const noexcept { return m_shape.getPosition().y; }
 
-float Ball::getTop() const noexcept
-{
-	return getY() - m_shape.getSize().y / 2.f;
-}
+float Ball::getTop() const noexcept { return getY() - m_shape.getSize().y / 2.f; }
 
-float Ball::getBottom() const noexcept
-{
-	return getY() + m_shape.getSize().y / 2.f;
-}
+float Ball::getBottom() const noexcept { return getY() + m_shape.getSize().y / 2.f; }
+
+float Ball::getLeft()    const noexcept { return getX() - m_shape.getSize().x / 2.f; }
+
+float Ball::getRight()   const noexcept { return getX() + m_shape.getSize().x / 2.f; }
 
 /* EOF */
 
