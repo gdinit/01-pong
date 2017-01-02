@@ -5,7 +5,7 @@
 int main()
 {
 #if defined __APPLE__
-	// Fix for `cwd issue`. Temporary, till we get the bundle build system in CMake: BEGIN
+	// Fix for `cwd issue` (a temporary workaround until we get the bundle build system in CMake): BEGIN
 	char				link_path [ MAXPATHLEN ];
 	// Current Directory Stuff
 	char				buf [ MAXPATHLEN ];
@@ -19,7 +19,7 @@ int main()
 	std::string			relative_path = long_path.substr( 0, pos );
 	chdir( relative_path.c_str() );
 	std::vector <std::string>	vec;
-	// Fix for `cwd issue`. Temporary, till we get the bundle build system in CMake: END
+	// Fix for `cwd issue` (a temporary workaround until we get the bundle build system in CMake): END
 #endif	// __APPLE__
 
 	// create & run the application

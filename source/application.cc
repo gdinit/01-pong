@@ -2,8 +2,6 @@
 
 #include <include/application.h>
 
-#include <iostream>	// TODO delete this debug line
-
 extern std::unique_ptr <Globals> GLOBALS;
 
 Application::Application()
@@ -52,10 +50,6 @@ void Application::loadSettings()
 	SETTINGS->sideRightSpawnY = CONFIG_PADDLE_RIGHT_SPAWN_Y;
 	SETTINGS->sideLeftSpawnX = CONFIG_PADDLE_LEFT_SPAWN_X;
 	SETTINGS->sideLeftSpawnY = CONFIG_PADDLE_LEFT_SPAWN_Y;
-
-	if ( SETTINGS->debugPrintToConsole ) {
-		std::cout << "Configuration values loaded into SETTINGS by Application::loadSettings() [" << this << "] \n";
-	}
 }
 
 void Application::loadGlobals()

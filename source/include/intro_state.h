@@ -20,8 +20,6 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
-// TODO delete this debug line
-#include <iostream>
 // for FPS text
 #include <string>
 

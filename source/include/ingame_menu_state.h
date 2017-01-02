@@ -1,5 +1,11 @@
 /* ingame_menu_state.h */
 
+/*
+
+****************************************************
+THIS STATE IS COMMENTED OUT FOR THE TIME BEING
+****************************************************
+
 #ifndef INGAME_MENU_STATE_H
 #define INGAME_MENU_STATE_H
 
@@ -18,8 +24,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
-// TODO delete this debug line
-#include <iostream>
 // for FPS text
 #include <string>
 
@@ -27,26 +31,27 @@ class StateMachine;
 
 namespace sf
 {
-	class RenderWindow;
+        class RenderWindow;
 }
 
 class InGameMenuState : public State
 {
-	public:
-		InGameMenuState( StateMachine &machine, sf::RenderWindow &window, bool replace = true );
-		void	initializeState();
-		void	processEvents();
-		void	update();
-		void	draw();
-		void	pause();
-		void	resume();
+        public:
+                InGameMenuState( StateMachine &machine, sf::RenderWindow &window, bool replace = true );
+                void	initializeState();
+                void	processEvents();
+                void	update();
+                void	draw();
+                void	pause();
+                void	resume();
 
-	private:
-		sf::Texture	m_bgTex;
-		sf::Sprite	m_bg;
+        private:
+                sf::Texture	m_bgTex;
+                sf::Sprite	m_bg;
 };
 
 #endif	// INGAME_MENU_STATE_H
+*/
 
 /* EOF */
 

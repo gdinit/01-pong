@@ -7,58 +7,42 @@ extern std::unique_ptr <Globals>	GLOBALS;
 extern std::unique_ptr <Ball>		ball;
 extern std::unique_ptr <Paddle>		paddleRight;
 extern std::unique_ptr <Paddle>		paddleLeft;
+extern std::unique_ptr <Scoreboard>	scoreboard;
 
 Ball::Ball()
 {
 	// ctor
-	m_shape.setPosition( CONFIG_BALL_SPAWN_POS, CONFIG_BALL_SPAWN_POS );
-	m_shape.setOrigin( CONFIG_BALL_WIDTH / 2.f, CONFIG_BALL_HEIGHT / 2.f );
-	m_shape.setSize( { CONFIG_BALL_WIDTH, CONFIG_BALL_HEIGHT } );
+	m_texture.loadFromFile( "assets/textures/white.png" );
+
+	// Create a sprite
+	m_sprite.setTexture( m_texture );
+	m_sprite.setTextureRect( sf::IntRect( CONFIG_BALL_SPAWN_POS, CONFIG_BALL_SPAWN_POS, CONFIG_BALL_WIDTH, CONFIG_BALL_HEIGHT ) );
+	m_sprite.setOrigin( CONFIG_BALL_WIDTH / 2.f, CONFIG_BALL_HEIGHT / 2.f );
 
 	// no hits so far, thus the velocity is zero
 	m_velocity.x = 0.f;
 	m_velocity.y = 0.f;
+
+	if ( !m_sbColPaddle.loadFromFile( "assets/sounds/collision1.wav" ) ) {
+	}
+	m_sColPaddle.setBuffer( m_sbColPaddle );
+
+	if ( !m_sbColWall.loadFromFile( "assets/sounds/collision2.wav" ) ) {
+	}
+	m_sColWall.setBuffer( m_sbColWall );
+
+	if ( !m_sbColGoal.loadFromFile( "assets/sounds/goal1.wav" ) ) {
+	}
+	m_sColGoal.setBuffer( m_sbColGoal );
 }
 
 Ball::~Ball() {}
 
-template<class T1, class T2>
-
-bool isIntersecting( T1 &objA, T2 &objB ) noexcept
-{
-	return objA->getRight() >= objB->getLeft() &&
-	       objA->getLeft() <= objB->getRight() &&
-	       objA->getBottom() >= objB->getTop() &&
-	       objA->getTop() <= objB->getBottom();
-}
-
-void collisionDetectRespond( std::unique_ptr <Paddle> &objPaddle, std::unique_ptr <Ball>  &objBall ) noexcept
-//void collisionDetectRespond( Paddle &objPaddle, Ball &objBall ) noexcept
-{
-	if ( !isIntersecting( objPaddle, objBall ) ) {
-		// no collision.
-		return;
-	}
-
-	// a collision has occurred. reverse the left<->right travel direction
-	objBall->m_velocity.x = -objBall->m_velocity.x;
-
-	if ( objBall->getX() < objPaddle->getX() ) {
-		// ball hit paddleRight
-		std::cout << "Ball hit paddleRight!\n";
-	} else {
-		// ball hit paddleLeft
-		std::cout << "Ball hit paddleLeft!\n";
-	}
-}
-
 void Ball::newRound( bool throwTowardsRightSide )
 {
-	throwTowardsRightSide = true;	// TODO delete this line // test hardcode = ALWAYS THROW LEFT
-
 	// put the ball to screen centre
 	sf::Vector2f				centreOfScreen { ( centreOfScreen.x = SETTINGS->currentScreenSizeWidth / 2 ), ( centreOfScreen.y = SETTINGS->currentScreenSizeHeight / 2 ) };
-	this->m_shape.setPosition( centreOfScreen );
+	this->m_sprite.setPosition( centreOfScreen );
 
 	// calculate new ball velocity
 	sf::Vector2f				ballNewVel;
@@ -87,43 +71,72 @@ void Ball::newRound( bool throwTowardsRightSide )
 	this->m_velocity = ballNewVelNormalized;
 }
 
+void Ball::collisionDetectRespond( void ) noexcept
+{
+	// DETECT PADDLE COLLISION
+	bool		reverseNeeded = false;
+	sf::FloatRect	boundingBoxBall = m_sprite.getGlobalBounds();
+	sf::FloatRect	boundingBoxPaddleRight = paddleRight->m_sprite.getGlobalBounds();
+	sf::FloatRect	boundingBoxPaddleLeft = paddleLeft->m_sprite.getGlobalBounds();
+	if ( boundingBoxBall.intersects( boundingBoxPaddleRight ) ) {
+		reverseNeeded = true;
+	} else if ( boundingBoxBall.intersects( boundingBoxPaddleLeft ) ) {
+		reverseNeeded = true;
+	} else {
+	}
+	if ( reverseNeeded ) {
+		m_sColPaddle.play();
+
+		// reverse ball direction
+		this->m_velocity = -( this->m_velocity );
+	}
+
+	// DETECT GOAL COLLISION
+	if ( this->getRight() >= CONFIG_GOAL_LINE_RIGHT ) {
+		// Play goal sound effect
+		m_sColGoal.play();
+		++GLOBALS->scoreLeftSide;
+		ball->newRound( true );
+	}
+
+	if ( this->getLeft() <= CONFIG_PLAY_AREA_OUTSIDE_LEFT ) {
+		// Play goal sound effect
+		m_sColGoal.play();
+		++GLOBALS->scoreRightSide;
+		ball->newRound( false );
+	}
+}
+
 void Ball::update( sf::Time timeSinceLastUpdate )
 {
-	collisionDetectRespond( paddleLeft, ball );
-	collisionDetectRespond( paddleRight, ball );
-
-	// std::cout << "(Pre-Update) ballPos is: " << std::to_string( this->getX() ) << "," << std::to_string( this->getY() ) << "\n";	// TODO delete this debug line
-
-	// bounce back if necessary
-	if ( this->getTop() <= SETTINGS->playAreaTopLine ) {
-		this->m_velocity = -( this->m_velocity );
+	// =========== bounceback from top & bottom
+	if ( this->getTop() <= SETTINGS->playAreaTopLine || this->getBottom() >= SETTINGS->playAreaBottomLine ) {
+		this->m_velocity.y = -( this->m_velocity.y );
+		m_sColWall.play();
 	}
-	if ( this->getBottom() >= SETTINGS->playAreaBottomLine ) {
-		this->m_velocity = -( this->m_velocity );
-	}
-
 	// calculate
 	sf::Vector2f moveDistance;
 	moveDistance.x = ( this->m_velocity.x * SETTINGS->ballSpeed ) * timeSinceLastUpdate.asMilliseconds();
 	moveDistance.y = ( this->m_velocity.y * SETTINGS->ballSpeed ) * timeSinceLastUpdate.asMilliseconds();
-
 	// action
-	this->m_shape.move( moveDistance );
+	this->m_sprite.move( moveDistance );
+
+	this->collisionDetectRespond();
 }
 
-void Ball::draw( sf::RenderTarget &target, sf::RenderStates states ) const { target.draw( this->m_shape ); }
+void Ball::draw( sf::RenderTarget &target, sf::RenderStates states ) const { target.draw( this->m_sprite ); }
 
-float Ball::getX() const noexcept { return m_shape.getPosition().x; }
+float Ball::getLeft()    const noexcept { return getX() - ( CONFIG_BALL_WIDTH / 2.f ); }
 
-float Ball::getY() const noexcept { return m_shape.getPosition().y; }
+float Ball::getRight()   const noexcept { return getX() + ( CONFIG_BALL_WIDTH / 2.f ); }
 
-float Ball::getTop() const noexcept { return getY() - m_shape.getSize().y / 2.f; }
+float Ball::getX() const noexcept { return m_sprite.getPosition().x; }
 
-float Ball::getBottom() const noexcept { return getY() + m_shape.getSize().y / 2.f; }
+float Ball::getY() const noexcept { return m_sprite.getPosition().y; }
 
-float Ball::getLeft()    const noexcept { return getX() - m_shape.getSize().x / 2.f; }
+float Ball::getTop() const noexcept { return getY() - ( CONFIG_BALL_HEIGHT / 2.f ); }
 
-float Ball::getRight()   const noexcept { return getX() + m_shape.getSize().x / 2.f; }
+float Ball::getBottom() const noexcept { return getY() + ( CONFIG_BALL_HEIGHT / 2.f ); }
 
 /* EOF */
 

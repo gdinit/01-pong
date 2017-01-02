@@ -8,8 +8,8 @@ struct Settings {
 	bool debugPrintToConsole = false;
 	bool debugPrintToConsoleFPS = false;
 	float paddleIndent = -1.f;
-	float playAreaTopLine = -1.f;
-	float playAreaBottomLine = -1.f;
+	float playAreaTopLine = 0.f;
+	float playAreaBottomLine = 0.f;
 	unsigned short int currentScreenSizeWidth = 0;
 	unsigned short int currentScreenSizeHeight = 0;
 	float ballSpeed = -1.f;
@@ -28,6 +28,19 @@ struct Settings {
 struct Globals {
 	bool moveUpRequestActive = false;
 	bool moveDownRequestActive = false;
+	//
+	float paddleRightTop;
+	float paddleRightBottom;
+	float paddleRightLeft;
+	float paddleRightRight;
+	//
+	float paddleLeftTop;
+	float paddleLeftBottom;
+	float paddleLeftLeft;
+	float paddleLeftRight;
+	//
+	signed long int	scoreLeftSide = 0;
+	signed long int	scoreRightSide = 0;
 };
 
 #endif	// GLOBALS_H

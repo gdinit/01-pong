@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 set(CMAKE_LEGACY_CYGWIN_WIN32 0)
+set (CMAKE_CXX_STANDARD 11)
 
 project(pong)
 
@@ -48,18 +49,12 @@ if (NOT CONFIGURED_ONCE)
 endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${SFML_INCLUDE_DIR})
-
 IF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     INCLUDE_DIRECTORIES("/Library/Frameworks/")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 SET(BUILD_SHARED_LIBRARIES OFF)
-SET(CMAKE_EXE_LINKER_FLAGS "-static")
-IF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-	SET(CMAKE_EXE_LINKER_FLAGS "")
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-
 
 #add_executable(pong ${SOURCES})
 SET(CMAKE_RC_LINK_EXECUTABLE "${CMAKE_CXX_LINK_EXECUTABLE}")
@@ -75,14 +70,23 @@ target_link_libraries(pong ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 
 
 if	(${CMAKE_SYSTEM_NAME}		MATCHES "Darwin")
+	#set	(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS} "-static")
+	set	(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS} "")
         set	(EXECUTABLE_OUTPUT_PATH
 		${PROJECT_BINARY_DIR}/release.mac
 		CACHE PATH
 		"Description to be updated..."
 		)
 elseif	(${CMAKE_SYSTEM_NAME}		MATCHES "Win")
+	set	(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS} "-static")
 	set	(EXECUTABLE_OUTPUT_PATH
 		${PROJECT_BINARY_DIR}/release.win
+		CACHE PATH
+		"Description to be updated..."
+		)
+elseif	(${CMAKE_SYSTEM_NAME}		MATCHES "Linux")
+	set	(EXECUTABLE_OUTPUT_PATH
+		${PROJECT_BINARY_DIR}/release.lin
 		CACHE PATH
 		"Description to be updated..."
 		)

@@ -22,8 +22,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
-// TODO delete this debug line
-#include <iostream>
 // for FPS text
 #include <string>
 
@@ -46,8 +44,6 @@ class PauseState : public State
 		void	resume();
 
 	private:
-		sf::Texture	m_bgTex;
-		sf::Sprite	m_bg;
 		sf::Font	m_fontPressToContinue;
 		sf::Text	m_textPressToContinue;
 		sf::Font	m_fontPressToContinueLine2;

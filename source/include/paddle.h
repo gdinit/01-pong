@@ -10,9 +10,6 @@
 
 #include <SFML/Graphics.hpp>
 
-// TODO delete this debug line
-#include <iostream>
-
 class Paddle : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {
 	public:
@@ -32,17 +29,19 @@ class Paddle : public sf::Transformable, public sf::Drawable, private sf::NonCop
 		void		moveUp();
 		void		moveDown();
 
-		bool			m_computerControlled;
-		bool			m_thisIsRightPaddle;
-		bool			m_weaken;
+		bool		m_computerControlled;
+		bool		m_thisIsRightPaddle;
+		bool		m_weaken;
 
 		virtual void	draw( sf::RenderTarget &target, sf::RenderStates states ) const;
+
+		sf::Sprite	m_sprite;
+		sf::Vector2f	m_position;
+		sf::Texture	m_texture;
 
 	protected:
 
 	private:
-		sf::RectangleShape	m_shape;
-		sf::Vector2f		m_position;
 };
 
 #endif	// PADDLE_H

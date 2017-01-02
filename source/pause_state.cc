@@ -6,7 +6,8 @@ extern std::unique_ptr <Settings>	SETTINGS;
 extern std::unique_ptr <Paddle>		paddleRight;
 extern std::unique_ptr <Paddle>		paddleLeft;
 extern std::unique_ptr <Ball>		ball;
-// TODO add score here
+extern std::unique_ptr <Scoreboard>	scoreboard;
+extern std::unique_ptr <Brick>		brick;
 
 PauseState::PauseState( StateMachine &machine, sf::RenderWindow &window, bool replace )
 	: State{ machine, window, replace }
@@ -19,10 +20,6 @@ void PauseState::initializeState()
 	restartStateClock();
 	m_worldView = m_window.getDefaultView();
 	m_urgentUpdateNeeded = 10;
-
-	// background
-	m_bgTex.loadFromFile( "assets/textures/3playing.png" );
-	m_bg.setTexture( m_bgTex, true );
 
 	// debug overlay font settings
 	m_font.loadFromFile( "assets/fonts/sansation.ttf" );
@@ -46,7 +43,7 @@ void PauseState::initializeState()
 	m_textPressToContinueLine2.setFont( m_fontPressToContinue );
 	m_textPressToContinueLine2.setCharacterSize( 15u );
 	m_textPressToContinueLine2.setFillColor( sf::Color::White );
-	m_textPressToContinueLine2.setString( "\nPress PauseBreak or P to continue" );
+	m_textPressToContinueLine2.setString( "\nPress ESC, PauseBreak, or P to continue" );
 	centerOrigin( m_textPressToContinueLine2 );
 	m_textPressToContinueLine2.setPosition( ( m_worldView.getSize().x / 2 ), ( ( m_worldView.getSize().y / 2 ) + 50 ) );
 }
@@ -96,6 +93,7 @@ void PauseState::update()
 			m_statisticsUpdateTime -= sf::seconds( 1.0f );
 			m_statisticsNumFrames = 0;
 		}
+		scoreboard->update( m_elapsedTime );
 	}
 }
 
@@ -103,14 +101,14 @@ void PauseState::draw()
 {
 	// Clear the previous drawing
 	m_window.clear();
-	m_window.draw( m_bg );
-	// debug overlay
 	if ( SETTINGS->inGameOverlay ) {
 		m_window.draw( m_statisticsText );
 	}
+	brick->draw( m_window, sf::RenderStates::Default );
 	ball->draw( m_window, sf::RenderStates::Default );
 	paddleRight->draw( m_window, sf::RenderStates::Default );
 	paddleLeft->draw( m_window, sf::RenderStates::Default );
+	scoreboard->draw( m_window, sf::RenderStates::Default );
 
 	m_window.	draw(	m_textPressToContinue );
 	m_window.	draw(	m_textPressToContinueLine2 );
@@ -131,6 +129,7 @@ void PauseState::processEvents()
 				break;
 			case sf::Event::KeyPressed:
 				switch ( evt.key.code ) {
+					case sf::Keyboard::Escape:
 					case sf::Keyboard::Pause:
 					case sf::Keyboard::P:
 						m_machine.lastState();

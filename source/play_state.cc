@@ -8,6 +8,7 @@ extern std::unique_ptr <Paddle>		paddleRight;
 extern std::unique_ptr <Paddle>		paddleLeft;
 extern std::unique_ptr <Ball>		ball;
 extern std::unique_ptr <Scoreboard>	scoreboard;
+extern std::unique_ptr <Brick>		brick;
 
 PlayState::PlayState( StateMachine &machine, sf::RenderWindow &window, bool replace ) : State{ machine, window, replace }
 {
@@ -20,10 +21,6 @@ void PlayState::initializeState()
 	m_justResumed = false;
 	m_worldView = m_window.getDefaultView();
 	m_urgentUpdateNeeded = 10;
-
-	// background
-	m_bgTex.loadFromFile( "assets/textures/3playing.png" );
-	m_bg.setTexture( m_bgTex, true );
 
 	// debug overlay font
 	m_font.loadFromFile( "assets/fonts/sansation.ttf" );
@@ -39,6 +36,8 @@ void PlayState::initializeState()
 	paddleLeft->m_computerControlled = SETTINGS->sideLeftIsComputer;
 	paddleRight->newRound();
 	paddleLeft->newRound();
+	GLOBALS->scoreLeftSide = 0;
+	GLOBALS->scoreRightSide = 0;
 	ball->newRound( m_nextThrowTowardsRight );
 	scoreboard->centrePosition();
 }
@@ -82,7 +81,6 @@ void PlayState::update()
 		m_statisticsUpdateTime += m_elapsedTime;
 		m_statisticsNumFrames += 1;
 		// update statsText only once a second
-		// however, if just entered this state (i.e.: this is the 2nd updateStats), then immediately update
 		if ( m_urgentUpdateNeeded > 0 ) {
 			// update now!
 			--m_urgentUpdateNeeded;
@@ -115,6 +113,7 @@ void PlayState::draw()
 	if ( SETTINGS->inGameOverlay ) {
 		m_window.draw( m_statisticsText );
 	}
+	brick->draw( m_window, sf::RenderStates::Default );
 	ball->draw( m_window, sf::RenderStates::Default );
 	paddleRight->draw( m_window, sf::RenderStates::Default );
 	paddleLeft->draw( m_window, sf::RenderStates::Default );
@@ -136,25 +135,26 @@ void PlayState::processEvents()
 			case sf::Event::KeyPressed:
 				switch ( evt.key.code ) {
 					case sf::Keyboard::Escape:
-						m_next = StateMachine::build <InGameMenuState> ( m_machine, m_window, false );
+						// InGameMenuState is commented out for the time being and replaced with PauseState
+						// m_next = StateMachine::build <InGameMenuState> ( m_machine, m_window, false );
+						m_next = StateMachine::build <PauseState> ( m_machine, m_window, false );
 						break;
 					case sf::Keyboard::Pause:
 					case sf::Keyboard::P:
-						// TODO add Are you sure? Y/N confirmation here
 						m_next = StateMachine::build <PauseState> ( m_machine, m_window, false );
 						break;
 					case sf::Keyboard::Q:
-						// TODO add Are you sure? Y/N confirmation here
 						m_machine.quit();
 						break;
 					case sf::Keyboard::M:
-						// TODO add Are you sure? Y/N confirmation here
 						m_next = StateMachine::build <MainMenuState> ( m_machine, m_window, true );
 						break;
 					case sf::Keyboard::Up:
+					case sf::Keyboard::W:
 						GLOBALS->moveUpRequestActive = true;
 						break;
 					case sf::Keyboard::Down:
+					case sf::Keyboard::S:
 						GLOBALS->moveDownRequestActive = true;
 						break;
 					case sf::Keyboard::F2:
@@ -173,9 +173,11 @@ void PlayState::processEvents()
 			case sf::Event::KeyReleased:
 				switch ( evt.key.code ) {
 					case sf::Keyboard::Up:
+					case sf::Keyboard::W:
 						GLOBALS->moveUpRequestActive = false;
 						break;
 					case sf::Keyboard::Down:
+					case sf::Keyboard::S:
 						GLOBALS->moveDownRequestActive = false;
 						break;
 					default:

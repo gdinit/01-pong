@@ -25,8 +25,6 @@
 #include <SFML/Window/Event.hpp>
 
 // to in-line document
-// TODO remove this debug only
-#include <string>
 // needed for std::unique_ptr
 #include <memory>
 

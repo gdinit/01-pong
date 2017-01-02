@@ -12,9 +12,6 @@
 
 #include <SFML/Graphics.hpp>
 
-// TODO delete this debug line
-#include <iostream>
-
 class Scoreboard : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {
 	public:

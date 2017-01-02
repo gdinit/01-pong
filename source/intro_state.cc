@@ -14,6 +14,8 @@ void IntroState::initializeState()
 {
 	restartStateClock();
 
+	m_worldView = m_window.getDefaultView();
+
 	// background
 	m_bgTex.loadFromFile( "assets/textures/1title_screen.png" );
 	m_bg.setTexture( m_bgTex, true );
@@ -44,13 +46,11 @@ void IntroState::initializeState()
 
 void IntroState::pause()
 {
-	std::cout << "IntroState Pause" << std::endl;
 }
 
 void IntroState::resume()
 {
 	restartStateClock();
-	std::cout << "IntroState Resume" << std::endl;
 }
 
 void IntroState::update()
@@ -60,11 +60,7 @@ void IntroState::update()
 
 	while ( m_timeSinceLastUpdate > State::TimePerFrame ) {
 		m_timeSinceLastUpdate -= State::TimePerFrame;
-
 		processEvents();
-		// updatePlayer();	// TODO do something here
-		// updateAI();		// TODO do something here
-
 		// update statistics for the debug overlay
 		m_statisticsUpdateTime += m_elapsedTime;
 		m_statisticsNumFrames += 1;
@@ -86,26 +82,21 @@ void IntroState::update()
 	if ( m_alpha.a != 0 ) {
 		m_alpha.a--;
 	}
-
 	m_fader.setFillColor( m_alpha );
+
+	// TODO: add delay timer here & when timer is out, automatically continue to the main menu
 }// exiting update()
 
 void IntroState::draw()
 {
 	// Clear the previous drawing
 	m_window.clear();
-
-	m_window.draw( m_bg );
-	// if ( inGameOverlay ) {
-	if ( true ) {
-		m_window.draw( m_statisticsText );
-	}
-
+	m_window.	draw(	m_bg );
+	m_window.	draw(	m_statisticsText );
 	// No need to draw if it's transparent
 	if ( m_alpha.a != 0 ) {
 		m_window.draw( m_fader );
 	}
-
 	m_window.draw( m_textPressToContinue );
 	m_window.display();
 }

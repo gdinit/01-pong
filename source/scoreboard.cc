@@ -11,7 +11,6 @@ Scoreboard::Scoreboard()
 	// ctor
 	m_scoreFont.loadFromFile( "assets/fonts/sansation.ttf" );
 	m_scoreText.setFont( m_scoreFont );
-	// m_scoreText.setPosition( -100.f, -100.f );
 	m_scoreText.setPosition( -100, -100 );
 	m_scoreText.setCharacterSize( 60u );
 	m_scoreText.setFillColor( sf::Color::White );
@@ -23,12 +22,14 @@ Scoreboard::~Scoreboard()
 
 void Scoreboard::incrementLeft()
 {
-	++m_scoreLeftSide;
+	// NOT IN USE
+	// ++m_scoreLeftSide;
 }
 
 void Scoreboard::incrementRight()
 {
-	++m_scoreRightSide;
+	// NOT IN USE
+	// ++m_scoreRightSide;
 }
 
 void Scoreboard::centrePosition()
@@ -38,7 +39,7 @@ void Scoreboard::centrePosition()
 
 void Scoreboard::update( sf::Time timeSinceLastUpdate )
 {
-	m_scoreText.setString( std::to_string( m_scoreLeftSide ) + "          " + std::to_string( m_scoreRightSide ) );
+	m_scoreText.setString( std::to_string( GLOBALS->scoreLeftSide ) + "          " + std::to_string( GLOBALS->scoreRightSide ) );
 	centerOrigin( m_scoreText );
 }
 

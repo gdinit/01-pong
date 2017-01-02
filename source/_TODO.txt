@@ -1,32 +1,53 @@
 // MISSING ---------------------------------------------------------------------
--add collision detection and response: bounce back from paddles (with bounce direction slight randomization)
--add collision detection and response: goal from left & right sides
--add scoring system [detect goal + update scoreboard]
--sound	1. collision sound 2. goal sound
--add version information to the main menu and pause screen
--menus
-	-main menu	start a new game, options
-	-options menu	resolution, full screen on/off, mute on/off, sound level 0 - 20 steps. key bindings (display / change)
--demo play AI vs AI on launch
--add side indicator with "computer" & "human" icons
--add visual aid: on round start (as a reminder) show the currently active control keys
--add a video intro using black & white original programmers demonstrating the game
--create a credits screen, auto text scroll
--add original programmer name & picture to credits screen
--add technical consultants to credits screen
 
 // KNOWN ISSUES ----------------------------------------------------------------
--when a movement key is held down, after ~1 second, movement speed slows down & object shakes
+-bg image is not set to scale. 
+-several dimension related stuff use CONFIG_WIN_WIDTH & CONFIG_WIN_HEIGHT therefore they do not support dynamic resizing of game windown resolution
+-sometimes ball gets stuck in paddle! keeps bouncing away paddle & towards paddle but never moves fast enough to break contact
 -FPS sometimes shows 10000000. perhaps "if stateAge is young, and observedFPS is too high" we should just discard it?
-
+-there is a console visual bug. the output starts going messy if F3 is pressed, as shown below. messy bit starts with "Median: 60" line.
+		        <m_observedFPSLastN>:  2 40 61 60 60 60 60 60 61 60     (median==desired)       FPSLimit INTACT.        Median: 60      FPS: 60 Time/Update: 16902us    updateTime: 1014152us                                                         
+		        <m_observedFPSLastN>:  40 61 60 60 60 60 60 61 60 59    (median==desired)       FPSLimit INTACT.        Median: 60      FPS: 59 Time/Update: 16970us    updateTime: 1001258us                                                         
+		Console debug   [0]                                                                                                                                                                                                                           
+		        <m_observedFPSLastN>:  61 60 60 60 60 60 61 60 59 61    (median==desired)       FPSLimit INTACT.        Median: 60              <m_observedFPSLastN>:  60 60 60 60 60 61 60 59 61 60    (median==desired)       FPSLimit INTACT.      
+		Median: 60              <m_observedFPSLastN>:  60 60 60 60 61 60 59 61 60 60    (median==desired)       FPSLimit INTACT.        Median: 60              <m_observedFPSLastN>:  60 60 60 61 60 59 61 60 60 60    (median==desired)       FPSLim
+		it INTACT.      Median: 60              <m_observedFPSLastN>:  60 60 61 60 59 61 60 60 60 60    (median==desired)       FPSLimit INTACT.        Median: 60              <m_observedFPSLastN>:  60 61 60 59 61 60 60 60 60 60    (median==desir
+		ed)     FPSLimit INTACT.        Median: 60              <m_observedFPSLastN>:  61 60 59 61 60 60 60 60 60 60    (median==desired)       FPSLimit INTACT.        Median: 60              <m_observedFPSLastN>:  60 59 61 60 60 60 60 60 60 60  
+		(median==desired)       FPSLimit INTACT.        Median: 60              <m_observedFPSLastN>:  59 61 60 60 60 60 60 60 60 60    (median==desired)       FPSLimit INTACT.        Median: 60              <m_observedFPSLastN>:  61 60 60 60 60 
+		60 60 60 60 60  (median==desired)       FPSLimit INTACT.        Median: 60              <m_observedFPSLastN>:  60 60 60 60 60 60 60 60 60 60    (median==desired)       FPSLimit INTACT.        Median: 60              <m_observedFPSLastN>: 
+		 60 60 60 60 60 60 60 60 60 61  (median==desired)       FPSLimit INTACT.        Median: 60              <m_observedFPSLastN>:  60 60 60 60 60 60 60 60 61 58    (median==desired)       FPSLimit INTACT.        Median: 60              <m_obs
+		ervedFPSLastN>:  60 60 60 60 60 60 60 61 58 60  (median==desired)       FPSLimit INTACT.        Median: 60              <m_observedFPSLastN>:  60 60 60 60 60 60 61 58 60 60    (median==desired)       FPSLimit INTACT.        Median: 60    
+		DebugOverlay    [0]                                                                                                                                                                                                                           
+		        <m_observedFPSLastN>:  60 60 60 60 60 61 58 60 60 60    (median==desired)       FPSLimit INTACT.        Median: 60              <m_observedFPSLastN>:  60 60 60 60 61 58 60 60 60 61    (median==desired)       FPSLimit INTACT.      
+		Median: 60              <m_observedFPSLastN>:  60 60 60 61 58 60 60 60 61 60    (median==desired)       FPSLimit INTACT.        Median: 60      Console debug   [1]                                                                           
+		        <m_observedFPSLastN>:  60 60 61 58 60 60 60 61 60 60    (median==desired)       FPSLimit INTACT.        Median: 60      FPS: 60 Time/Update: 16882us    updateTime: 1012932us                                                         
+		Console debug   [0]                                                                                                                                                                                                                           
+		        <m_observedFPSLastN>:  60 61 58 60 60 60 61 60 60 59    (median==desired)       FPSLimit INTACT.        Median: 60              <m_observedFPSLastN>:  61 58 60 60 60 61 60 60 59 61    (median==desired)       FPSLimit INTACT.      
+		Median: 60              <m_observedFPSLastN>:  58 60 60 60 61 60 60 59 61 60    (median==desired)       FPSLimit INTACT.        Median: 60              <m_observedFPSLastN>:  60 60 60 61 60 60 59 61 60 60    (median==desired)       FPSLim
+		it INTACT.      Median: 60              <m_observedFPSLastN>:  60 60 61 60 60 59 61 60 60 60    (median==desired)       FPSLimit INTACT.        Median: 60      DebugOverlay    [1]                                                           
+		DebugOverlay    [0]                                                                                                                                                                                                                           
+		        <m_observedFPSLastN>:  60 61 60 60 59 61 60 60 60 61    (median==desired)       FPSLimit INTACT.        Median: 60              <m_observedFPSLastN>:  61 60 60 59 61 60 60 60 61 60    (median==desired)       FPSLimit INTACT.      
+		Median: 60              <m_observedFPSLastN>:  60 60 59 61 60 60 60 61 60 59    (median==desired)       FPSLimit INTACT.        Median: 60      C:\g\pongprivate\buildscripts (master)                                                        
+		λ wrun.bat                                                                                                                                                                                                                                    
+		Configuration values loaded into SETTINGS by Application::loadSettings() [0x86fc58]                                                                                                                                                           
+		Born!                                                                                                                                                                                                                                         
 
 // ENHANCEMENT -----------------------------------------------------------------
+-add side indicator with "computer" & "human" icons
 -add ability to toggle FullScreen at runtime (F11)
 -in the intro picture, make the Pong on the computer screen look like the real one
 -add pong namespace in every file
 -add std everywhere and lose the `using namespace std` at top of each file
 -wrap all if(debug)s in ifdefs & use a master on/off switch in config.h
-
+-implement an improved main menu with OPTIONS. implement OPTIONS sub-menu with: resolution, full screen on/off, mute on/off, sound level 0 - 20 steps. key bindings (display / change)
+-add a video intro using black & white original programmers demonstrating the game
+-add visual aid: on round start (as a reminder) show the currently active control keys
+-add collision detection and response: bounce back from paddles WITH SLIGHT RANDOMIZATION in bounce direction
+-add version information to the main menu and pause screen
+-demo play AI vs AI on launch. PRESS SPACE BAR TO CONTINUE text visible at all times.
+-create CREDITS screen, *add original programmer name & picture, *add technical consultant names here, make it auto text scroll
+-add an in-game menu
+-make user aware of global shortcuts:	M main menu, Q quit 
 
 / FIXED / COMPLETED / DONE / CANCELLED ------------------------------------------
 +on introstate, when Q is pressed game quits as expected but then it respawns a second instance! (pressing Q 2nd time terminates successfully)
@@ -50,3 +71,13 @@
 +cleanup and complete newround initial random throw target on new round code
 +add random speed to newround initial random throw 
 +add collision detection and response: bounce back from top/bottom (without bounce direction randomization)
++get a desktop Linux VM for testing && successfully compile under linux, document the linux test machine setup process
++scrap the current coll model, rewrite simpler using SFML's globalboundingbox method
++add soundFX:	1. collision sound 2. goal sound
++add collision detection and response: bounce back from paddles
++fixed: when a movement key is held down, after ~1 second, movement speed slows down & object shakes
++fixed:	press space bar to continue is not visible in introstate?
++add collision detection and response: goal from left & right sides
++add scoring system [detect goal + update scoreboard]
++middle vertical line comes with a bg texture, in different resolutions it's messed up. need to recreate it programmatically so that it is always correctly sized & positioned
++implement a basic main menu with:	PLAY, CREDITS, QUIT
