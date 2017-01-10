@@ -62,7 +62,7 @@ add_executable(
   pong
   ${GUI_TYPE}
   ${SOURCES}
-  ${MYPROJECT_ROOT_DIR}/exe_icon_for_windows/resource.rc
+  ${MYPROJECT_ROOT_DIR}/extras/exe_icon_for_windows/resource.rc
 )
 
 target_link_libraries(pong ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
@@ -82,8 +82,13 @@ elseif	(${CMAKE_SYSTEM_NAME}		MATCHES "Win")
 	set	(EXECUTABLE_OUTPUT_PATH
 		${PROJECT_BINARY_DIR}/release.win
 		CACHE PATH
-		"Description to be updated..."
-		)
+		"Description to be updated...")
+	#----------------------------------------
+	# for Windows builds, copy dependency binaries to build dir (only OpenAL so far as we embed SFML into the EXE).
+	add_custom_command(TARGET pong POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_directory
+		${MYPROJECT_ROOT_DIR}/dependencies	$<TARGET_FILE_DIR:pong>/)
+	#----------------------------------------
 elseif	(${CMAKE_SYSTEM_NAME}		MATCHES "Linux")
 	set	(EXECUTABLE_OUTPUT_PATH
 		${PROJECT_BINARY_DIR}/release.lin
@@ -108,21 +113,27 @@ set	(LIBRARY_OUTPUT_PATH
 	)
 mark_as_advanced	(LIBRARY_OUTPUT_PATH)
 
-
-
-
+################################################################################
 # PRE/POST BUILD SCRIPTS
+################################################################################
 
+#----------------------------------------
 #add_custom_command(TARGET pong PRE_BUILD
-# so far, nothing to do in pre-build stage
+#so far, nothing to do in pre-build stage...
+#----------------------------------------
 
+#----------------------------------------
 # copy product assets to build dir
 add_custom_command(TARGET pong POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
 	${MYPROJECT_ROOT_DIR}/assets			$<TARGET_FILE_DIR:pong>/assets)
+#----------------------------------------
+
+#----------------------------------------
 # copy product documentation to build dir
 add_custom_command(TARGET pong POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
 	${MYPROJECT_ROOT_DIR}/documentation		$<TARGET_FILE_DIR:pong>/documentation)
+#----------------------------------------
 
 #EOF

@@ -25,7 +25,6 @@ bool State::isReplacing()
 
 void State::toggleDebugShowOverlay()
 {
-	std::string description = "this function does blah";
 	if ( SETTINGS->inGameOverlay == true ) {
 		SETTINGS->inGameOverlay = false;
 		// destroy the text
