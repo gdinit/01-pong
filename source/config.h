@@ -3,7 +3,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <include/globals.h>
+#include "globals.h"
 
 // needed for window_title etc.
 #include <string>

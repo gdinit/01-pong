@@ -11,7 +11,8 @@
 
 void		centerOrigin( sf::Text &text );
 
-static float	magnitude( sf::Vector2f v );
+// static float	magnitude( sf::Vector2f v );
+float		magnitude( sf::Vector2f v );
 float		magnitude( float x, float y );
 int		magnitude( int x, int y );
 

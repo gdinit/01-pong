@@ -3,10 +3,10 @@
 #ifndef BALL_H
 #define BALL_H
 
-#include <include/config.h>
-#include <include/utility.h>
-#include <include/vector2d.h>
-#include <include/paddle.h>
+#include "config.h"
+#include "utility.h"
+#include "vector2d.h"
+#include "paddle.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>

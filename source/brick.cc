@@ -1,13 +1,11 @@
 /* brick.cc */
 
-#include <include/brick.h>
+#include "brick.h"
 
 extern std::unique_ptr <Settings> SETTINGS;
 
 Brick::Brick()
 {
-	// ctor
-
 	m_textureWhite.loadFromFile( "assets/textures/white.png" );
 	m_textureBlack.loadFromFile( "assets/textures/black.png" );
 

@@ -1,6 +1,6 @@
 /* utility.cc */
 
-#include <include/utility.h>
+#include "utility.h"
 
 void centerOrigin( sf::Text &text )
 {
@@ -9,7 +9,8 @@ void centerOrigin( sf::Text &text )
 }
 
 // find length (or Magnitude)
-static float magnitude( sf::Vector2f v )
+// static float magnitude( sf::Vector2f v )
+float magnitude( sf::Vector2f v )
 {
 	return sqrt( ( v.x * v.x ) + ( v.y * v.y ) );
 }

@@ -1,6 +1,6 @@
 /* main_menu_state.cc */
 
-#include <include/main_menu_state.h>
+#include "main_menu_state.h"
 
 MainMenuState::MainMenuState( StateMachine &machine, sf::RenderWindow &window, bool replace )
 	: State{ machine, window, replace }

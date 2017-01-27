@@ -1,6 +1,6 @@
 /* paddle.cc */
 
-#include <include/paddle.h>
+#include "paddle.h"
 
 extern std::unique_ptr <Settings>	SETTINGS;
 extern std::unique_ptr <Globals>	GLOBALS;
@@ -8,10 +8,13 @@ extern std::unique_ptr <Ball>		ball;
 
 Paddle::Paddle( bool thisIsRightPaddle )
 {
-	// ctor
-	m_texture.loadFromFile( "assets/textures/white.png" );
+	// LOAD TEXTURE(S)
+	if ( !m_texture.loadFromFile( "assets/textures/white.png" ) ) {
+		std::cout << "\nERROR while attempting to load a resource!\n";
+		exit( EXIT_FAILURE );
+	}
 
-	// Create a sprite
+	// CREATE A SPRITE
 	if ( thisIsRightPaddle ) {
 		m_sprite.setTexture( m_texture );
 		m_sprite.setTextureRect( sf::IntRect( -100, -100, CONFIG_PADDLE_WIDTH, CONFIG_PADDLE_HEIGHT ) );
@@ -30,9 +33,9 @@ void Paddle::newRound()
 {
 	// reset paddle positions
 	if ( this->m_thisIsRightPaddle ) {
-		this->m_sprite.setPosition( ( SETTINGS->currentScreenSizeWidth - SETTINGS->paddleIndent ), SETTINGS->currentScreenSizeHeight / 2 );
+		this->m_sprite.setPosition( ( SETTINGS->currentScreenSizeWidth - SETTINGS->paddleIndent ), SETTINGS->currentScreenSizeHeight / 2.f );
 	} else {
-		this->m_sprite.setPosition( SETTINGS->paddleIndent, SETTINGS->currentScreenSizeHeight / 2 );
+		this->m_sprite.setPosition( SETTINGS->paddleIndent, SETTINGS->currentScreenSizeHeight / 2.f );
 	}
 }
 
@@ -52,10 +55,10 @@ void Paddle::update( sf::Time timeSinceLastUpdate )
 		// do Computer-Player stuff here
 		// if ( ( ballY < myY ) && ( myTop > SETTINGS->playAreaTopLine ) ) {
 		if ( ( ballY < myY ) && ( myY - ballY > CONFIG_PADDLE_MIN_DIFFERENCE ) && ( myTop > SETTINGS->playAreaTopLine ) ) {
-			sf::Vector2f moveDistance( ( 0.f ), ( moveDistance.y = CONFIG_PADDLE_MOVEMENT_NEG_STEP ) );
+			sf::Vector2f moveDistance( ( 0.f ), ( CONFIG_PADDLE_MOVEMENT_NEG_STEP ) );
 			this->m_sprite.move( moveDistance );
 		} else if ( ( ballY > myY ) && ( ballY - myY > CONFIG_PADDLE_MIN_DIFFERENCE ) && ( myBottom < SETTINGS->playAreaBottomLine ) ) {
-			sf::Vector2f moveDistance( ( 0.f ), ( moveDistance.y = CONFIG_PADDLE_MOVEMENT_POS_STEP ) );
+			sf::Vector2f moveDistance( ( 0.f ), ( CONFIG_PADDLE_MOVEMENT_POS_STEP ) );
 			this->m_sprite.move( moveDistance );
 		}
 	} else {
@@ -66,10 +69,6 @@ void Paddle::update( sf::Time timeSinceLastUpdate )
 
 void Paddle::draw( sf::RenderTarget &target, sf::RenderStates states ) const { target.draw( m_sprite ); }
 
-/*
-float Paddle::getLeft()    const noexcept { return getX() - m_sprite.getSize().x / 2.f; }
-float Paddle::getRight()   const noexcept { return getX() + m_sprite.getSize().x / 2.f; }
-*/
 float Paddle::getX() const noexcept { return m_sprite.getPosition().x; }
 
 float Paddle::getY() const noexcept { return m_sprite.getPosition().y; }

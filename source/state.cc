@@ -1,6 +1,6 @@
 /* state.cc */
 
-#include <include/state.h>
+#include "state.h"
 
 const sf::Time State::TimePerFrame = sf::seconds( 1.f / CONFIG_DESIRED_FPS_FLOAT );
 

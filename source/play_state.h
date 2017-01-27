@@ -3,17 +3,17 @@
 #ifndef PLAY_STATE_H
 #define PLAY_STATE_H
 
-#include <include/state.h>
-#include <include/state_machine.h>
-#include <include/main_menu_state.h>
-#include <include/ingame_menu_state.h>
-#include <include/pause_state.h>
-#include <include/config.h>
+#include "state.h"
+#include "state_machine.h"
+#include "main_menu_state.h"
+#include "ingame_menu_state.h"
+#include "pause_state.h"
+#include "config.h"
 // needed for centerOrigin
-#include <include/utility.h>
-#include <include/paddle.h>
-#include <include/make_unique.h>
-#include <include/game_objects.h>
+#include "utility.h"
+#include "paddle.h"
+#include "make_unique.h"
+#include "game_objects.h"
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>

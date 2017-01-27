@@ -1,5 +1,5 @@
 #PONG
-###A Clone of the Classic Game Pong by gdinit
+###A clone of the Classic Game Pong by gdinit
 https://github.com/gdinit
 
 Please refer to "documentation/" for license, credits, and other information.

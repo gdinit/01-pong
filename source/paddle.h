@@ -3,12 +3,16 @@
 #ifndef  PADDLE_H
 #define  PADDLE_H
 
-#include <include/config.h>
-#include <include/globals.h>
-#include <include/ball.h>
-#include <include/game_objects.h>
+#include "config.h"
+#include "globals.h"
+#include "ball.h"
+#include "game_objects.h"
 
 #include <SFML/Graphics.hpp>
+
+// TODO switch to printf
+// for texture open failure
+#include <iostream>
 
 class Paddle : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {

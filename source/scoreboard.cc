@@ -1,6 +1,6 @@
 /* scoreboard.cc */
 
-#include <include/scoreboard.h>
+#include "scoreboard.h"
 
 extern std::unique_ptr <Settings>	SETTINGS;
 extern std::unique_ptr <Globals>	GLOBALS;
@@ -8,7 +8,6 @@ extern std::unique_ptr <Ball>		ball;
 
 Scoreboard::Scoreboard()
 {
-	// ctor
 	m_scoreFont.loadFromFile( "assets/fonts/sansation.ttf" );
 	m_scoreText.setFont( m_scoreFont );
 	m_scoreText.setPosition( -100, -100 );

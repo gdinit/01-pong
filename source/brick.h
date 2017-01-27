@@ -3,10 +3,10 @@
 #ifndef  BRICK_H
 #define  BRICK_H
 
-#include <include/config.h>
-#include <include/globals.h>
-// #include <include/ball.h>
-// #include <include/game_objects.h>
+#include "config.h"
+#include "globals.h"
+#include "ball.h"
+#include "game_objects.h"
 
 #include <SFML/Graphics.hpp>
 

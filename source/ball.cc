@@ -1,6 +1,6 @@
 /* ball.cc */
 
-#include <include/ball.h>
+#include "ball.h"
 
 extern std::unique_ptr <Settings>	SETTINGS;
 extern std::unique_ptr <Globals>	GLOBALS;
@@ -11,7 +11,6 @@ extern std::unique_ptr <Scoreboard>	scoreboard;
 
 Ball::Ball()
 {
-	// ctor
 	m_texture.loadFromFile( "assets/textures/white.png" );
 
 	// Create a sprite
