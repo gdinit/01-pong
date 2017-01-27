@@ -17,7 +17,7 @@
 class Paddle : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {
 	public:
-		Paddle( bool thisIsRightPaddle );
+		explicit Paddle( bool thisIsRightPaddle );
 
 		virtual ~Paddle();
 
@@ -33,9 +33,8 @@ class Paddle : public sf::Transformable, public sf::Drawable, private sf::NonCop
 		void		moveUp();
 		void		moveDown();
 
-		bool		m_computerControlled;
+		bool		m_computerControlled = true;
 		bool		m_thisIsRightPaddle;
-		bool		m_weaken;
 
 		virtual void	draw( sf::RenderTarget &target, sf::RenderStates states ) const;
 

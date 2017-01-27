@@ -70,7 +70,7 @@ class State
 		sf::RenderWindow &		m_window;
 		bool				m_replacing;
 		static const sf::Time		TimePerFrame;
-		int				m_statisticsNumFrames;
+		int				m_statisticsNumFrames = 0;
 		sf::Time			m_timeSinceLastUpdate;
 		sf::Time			m_elapsedTime;
 		sf::Clock			m_clock;
@@ -79,13 +79,13 @@ class State
 		sf::Font			m_font;
 		sf::Text			m_statisticsText;
 		sf::Time			m_statisticsUpdateTime;
-		unsigned short int		m_urgentUpdateNeeded;
+		unsigned short int		m_urgentUpdateNeeded = 0;
 		sf::View			m_worldView;
 		std::deque <unsigned short int>	m_observedFPSLastN;
 		short int			m_FPSAdjPosDelta = 0;
 		short int			m_FPSAdjNegDelta = 0;
 		unsigned short int		m_activeFPSLimit = CONFIG_DESIRED_FPS_INT;
-		bool				m_justResumed;
+		bool				m_justResumed = false;
 };
 
 #endif	// STATE_H

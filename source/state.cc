@@ -203,11 +203,8 @@ void State::restartStateClock()
 int State::getStateAgeAsSeconds()
 {
 	sf::Time		tmp = sf::Time::Zero;
-
 	tmp = m_stateBirthdate.getElapsedTime();
-
-	signed short int	n = -1;
-	n = std::round( tmp.asSeconds() );
+	signed short int	n = std::round( tmp.asSeconds() );
 
 	return n;
 }

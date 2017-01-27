@@ -25,10 +25,6 @@ class Scoreboard : public sf::Transformable, public sf::Drawable, private sf::No
 		void		incrementRight();
 		void		centrePosition();
 
-		bool		m_computerControlled;
-		bool		m_thisIsRightScoreboard;
-		bool		m_weaken;
-
 	protected:
 
 	private:
