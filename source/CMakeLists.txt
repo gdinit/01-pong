@@ -19,7 +19,6 @@ endif(NOT CMAKE_BUILD_TYPE)
 # Compiler options
 ####################
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-	#set(warnings "-Wall -Wextra -Werror")
 	set(warnings "-Wall -Wno-unknown-pragmas -Wextra -Werror")
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 	set(warnings "/W4 /WX /EHsc /Wno-unknown-pragmas")
@@ -39,9 +38,17 @@ IF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	INCLUDE_DIRECTORIES("/Library/Frameworks/")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
-SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
-#SET(BUILD_SHARED_LIBRARIES OFF)
-SET(BUILD_SHARED_LIBRARIES ON)
+####################
+# LIB SUFFIXES
+####################
+if	(${CMAKE_SYSTEM_NAME}		MATCHES "Win")
+	SET(CMAKE_FIND_LIBRARY_PREFIXES "")
+	SET(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
+elseif	(${CMAKE_SYSTEM_NAME}		MATCHES "Linux")
+	SET(CMAKE_FIND_LIBRARY_PREFIXES "lib")
+	SET(CMAKE_FIND_LIBRARY_SUFFIXES ".so" ".a")
+endif()
+mark_as_advanced	(CMAKE_FIND_LIBRARY_PREFIXES)
 
 SET(CMAKE_RC_LINK_EXECUTABLE "${CMAKE_CXX_LINK_EXECUTABLE}")
 add_executable(
@@ -63,7 +70,7 @@ set(CMAKE_SUPPRESS_REGENERATION true)
 if	(${CMAKE_SYSTEM_NAME}		MATCHES "Darwin")
         set	(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS} "")
 elseif	(${CMAKE_SYSTEM_NAME}		MATCHES "Win")
-        #set	(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS} "")
+        set	(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS} "")
 	if(CMAKE_COMPILER_IS_GNUCXX)
 		set	(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS} "-static")
 	endif()
