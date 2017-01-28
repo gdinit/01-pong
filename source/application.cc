@@ -3,6 +3,7 @@
 #include "application.h"
 
 extern std::unique_ptr <Globals> GLOBALS;
+extern std::unique_ptr <Settings> SETTINGS;
 
 Application::Application()
 {

@@ -3,6 +3,8 @@
 #ifndef GAME_OBJECTS_H
 #define GAME_OBJECTS_H
 
+// Settings & Globals both defined here
+#include "globals.h"
 #include "ball.h"
 #include "paddle.h"
 #include "scoreboard.h"
