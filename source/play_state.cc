@@ -10,7 +10,9 @@ extern std::unique_ptr <Ball>		ball;
 extern std::unique_ptr <Scoreboard>	scoreboard;
 extern std::unique_ptr <Brick>		brick;
 
-PlayState::PlayState( StateMachine &machine, sf::RenderWindow &window, bool replace ) : State{ machine, window, replace }
+PlayState::PlayState( StateMachine &machine, sf::RenderWindow &window, bool
+	replace )
+	: State{ machine, window, replace }
 {
 	initializeState();
 }
@@ -52,7 +54,8 @@ void PlayState::resume()
 	m_urgentUpdateNeeded = 10;
 	// destroy the queue
 	m_justResumed = true;
-	// give me stats in the first frame, but first make up some plausible values
+	// give me stats in the first frame, but first make up some plausible
+	// values
 	updateDebugOverlayTextIfEnabled( true );
 }
 
@@ -61,7 +64,8 @@ void PlayState::update()
 	sf::Time m_elapsedTime = m_clock.restart();
 	m_timeSinceLastUpdate += m_elapsedTime;
 
-	// if returning from pause(), let's jump in time to prevent slow catchup process
+	// if returning from pause(), let's jump in time to prevent slow catchup
+	// process
 	if ( m_justResumed ) {
 		m_timeSinceLastUpdate = TimePerFrame;
 	}
@@ -90,7 +94,8 @@ void PlayState::update()
 		}
 		if ( m_statisticsUpdateTime >= sf::seconds( 1.0f ) ) {
 			if ( m_statisticsNumFrames <= 1 ) {
-				break;	// if we're playing catchup, don't bother with debugOverlayText
+				break;	// if we're playing catchup, don't
+					// bother with debugOverlayText
 			}
 
 			recordObservedFPS();
@@ -135,27 +140,48 @@ void PlayState::processEvents()
 			case sf::Event::KeyPressed:
 				switch ( evt.key.code ) {
 					case sf::Keyboard::Escape:
-						// InGameMenuState is commented out for the time being and replaced with PauseState
-						// m_next = StateMachine::build <InGameMenuState> ( m_machine, m_window, false );
-						m_next = StateMachine::build <PauseState> ( m_machine, m_window, false );
+						// InGameMenuState is commented
+						// out for the time being and
+						// replaced with PauseState
+						// m_next = StateMachine::build
+						// <InGameMenuState> (
+						// m_machine, m_window, false );
+						m_next =
+							StateMachine::	build <
+								PauseState> (
+								m_machine,
+								m_window,
+								false );
 						break;
 					case sf::Keyboard::Pause:
 					case sf::Keyboard::P:
-						m_next = StateMachine::build <PauseState> ( m_machine, m_window, false );
+						m_next =
+							StateMachine::	build <
+								PauseState> (
+								m_machine,
+								m_window,
+								false );
 						break;
 					case sf::Keyboard::Q:
 						m_machine.quit();
 						break;
 					case sf::Keyboard::M:
-						m_next = StateMachine::build <MainMenuState> ( m_machine, m_window, true );
+						m_next =
+							StateMachine::build <
+								MainMenuState> (
+								m_machine,
+								m_window,
+								true );
 						break;
 					case sf::Keyboard::Up:
 					case sf::Keyboard::W:
-						GLOBALS->moveUpRequestActive = true;
+						GLOBALS->moveUpRequestActive =
+							true;
 						break;
 					case sf::Keyboard::Down:
 					case sf::Keyboard::S:
-						GLOBALS->moveDownRequestActive = true;
+						GLOBALS->moveDownRequestActive =
+							true;
 						break;
 					case sf::Keyboard::F2:
 						this->toggleDebugShowOverlay();
@@ -164,7 +190,8 @@ void PlayState::processEvents()
 						this->toggleDebugConsoleOutput();
 						break;
 					case sf::Keyboard::F4:
-						this->toggleDebugDynFPSConsoleOutput();
+						this->
+						toggleDebugDynFPSConsoleOutput();
 						break;
 					default:
 						break;
@@ -174,11 +201,13 @@ void PlayState::processEvents()
 				switch ( evt.key.code ) {
 					case sf::Keyboard::Up:
 					case sf::Keyboard::W:
-						GLOBALS->moveUpRequestActive = false;
+						GLOBALS->moveUpRequestActive =
+							false;
 						break;
 					case sf::Keyboard::Down:
 					case sf::Keyboard::S:
-						GLOBALS->moveDownRequestActive = false;
+						GLOBALS->moveDownRequestActive =
+							false;
 						break;
 					default:
 						break;

@@ -12,7 +12,8 @@
 
 #include <SFML/Graphics.hpp>
 
-class Scoreboard : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
+class Scoreboard : public sf::Transformable, public sf::Drawable, private
+		 sf::NonCopyable
 {
 	public:
 		Scoreboard();
@@ -20,7 +21,8 @@ class Scoreboard : public sf::Transformable, public sf::Drawable, private sf::No
 		virtual ~Scoreboard();
 
 		void		update( sf::Time timeSinceLastUpdate );
-		virtual void	draw( sf::RenderTarget &target, sf::RenderStates states ) const;
+		virtual void	draw( sf::RenderTarget &target, sf::RenderStates
+		states ) const;
 		void		incrementLeft();
 		void		incrementRight();
 		void		centrePosition();

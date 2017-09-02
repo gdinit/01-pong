@@ -33,16 +33,19 @@ void Scoreboard::incrementRight()
 
 void Scoreboard::centrePosition()
 {
-	m_scoreText.setPosition( ( SETTINGS->currentScreenSizeWidth / 2 ), +60.f );
+	m_scoreText.setPosition( ( SETTINGS->currentScreenSizeWidth / 2 ),
+		+60.f );
 }
 
 void Scoreboard::update( sf::Time timeSinceLastUpdate )
 {
-	m_scoreText.setString( std::to_string( GLOBALS->scoreLeftSide ) + "          " + std::to_string( GLOBALS->scoreRightSide ) );
+	m_scoreText.setString( std::to_string( GLOBALS->scoreLeftSide ) +
+		"          " + std::to_string( GLOBALS->scoreRightSide ) );
 	centerOrigin( m_scoreText );
 }
 
-void Scoreboard::draw( sf::RenderTarget &target, sf::RenderStates states ) const {
+void Scoreboard::draw( sf::RenderTarget &target, sf::RenderStates
+	states ) const {
 	target.draw( m_scoreText );
 }
 

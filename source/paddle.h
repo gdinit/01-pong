@@ -14,7 +14,8 @@
 // for texture open failure
 #include <iostream>
 
-class Paddle : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
+class Paddle : public sf::Transformable, public sf::Drawable, private
+	     sf::NonCopyable
 {
 	public:
 		explicit Paddle( bool thisIsRightPaddle );
@@ -36,7 +37,8 @@ class Paddle : public sf::Transformable, public sf::Drawable, private sf::NonCop
 		bool		m_computerControlled = true;
 		bool		m_thisIsRightPaddle;
 
-		virtual void	draw( sf::RenderTarget &target, sf::RenderStates states ) const;
+		virtual void	draw( sf::RenderTarget &target, sf::RenderStates
+		states ) const;
 
 		sf::Sprite	m_sprite;
 		sf::Vector2f	m_position;

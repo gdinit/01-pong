@@ -15,7 +15,9 @@ Ball::Ball()
 
 	// Create a sprite
 	m_sprite.setTexture( m_texture );
-	m_sprite.setTextureRect( sf::IntRect( CONFIG_BALL_SPAWN_POS, CONFIG_BALL_SPAWN_POS, CONFIG_BALL_WIDTH, CONFIG_BALL_HEIGHT ) );
+	m_sprite.setTextureRect( sf::IntRect( CONFIG_BALL_SPAWN_POS,
+			CONFIG_BALL_SPAWN_POS, CONFIG_BALL_WIDTH,
+			CONFIG_BALL_HEIGHT ) );
 	m_sprite.setOrigin( CONFIG_BALL_WIDTH / 2.f, CONFIG_BALL_HEIGHT / 2.f );
 
 	// no hits so far, thus the velocity is zero
@@ -40,8 +42,18 @@ Ball::~Ball() {}
 void Ball::newRound( bool throwTowardsRightSide )
 {
 	// put the ball to screen centre
-	sf::Vector2f				centreOfScreen { ( centreOfScreen.x = SETTINGS->currentScreenSizeWidth / 2 ), ( centreOfScreen.y = SETTINGS->currentScreenSizeHeight / 2 ) };
-	this->m_sprite.setPosition( centreOfScreen );
+	sf::Vector2f
+		centreOfScreen { (
+					 centreOfScreen.x =
+						 SETTINGS->
+		currentScreenSizeWidth /
+						 2 ), ( centreOfScreen.y =
+								SETTINGS->
+								currentScreenSizeHeight
+		/
+								2 ) };
+	// this->m_sprite.setPosition( centreOfScreen );
+	m_sprite.setPosition( centreOfScreen );
 
 	// calculate new ball velocity
 	sf::Vector2f				ballNewVel;
@@ -55,9 +67,12 @@ void Ball::newRound( bool throwTowardsRightSide )
 
 	// randomize ball direction
 	std::mt19937				mt1;
-	auto					seed1 = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+	auto					seed1 =
+		std::chrono::high_resolution_clock::now().time_since_epoch().
+		count();
 	mt1.seed( ( unsigned long )seed1 );
-	std::uniform_real_distribution <>	dist1( SETTINGS->playAreaTopLine, SETTINGS->playAreaBottomLine );
+	std::uniform_real_distribution <>	dist1(
+		SETTINGS->playAreaTopLine, SETTINGS->playAreaBottomLine );
 	throwTargetY = dist1( mt1 );
 
 	// calculate new velocity
@@ -66,7 +81,8 @@ void Ball::newRound( bool throwTowardsRightSide )
 	ballNewVel.y = throwTargetY - ballPos.y;
 
 	// normalize the velocity vector & assign it to the object
-	sf::Vector2f				ballNewVelNormalized = normalize( ballNewVel );
+	sf::Vector2f				ballNewVelNormalized =
+		normalize( ballNewVel );
 	this->m_velocity = ballNewVelNormalized;
 }
 
@@ -75,8 +91,10 @@ void Ball::collisionDetectRespond( void ) noexcept
 	// DETECT PADDLE COLLISION
 	bool		reverseNeeded = false;
 	sf::FloatRect	boundingBoxBall = m_sprite.getGlobalBounds();
-	sf::FloatRect	boundingBoxPaddleRight = paddleRight->m_sprite.getGlobalBounds();
-	sf::FloatRect	boundingBoxPaddleLeft = paddleLeft->m_sprite.getGlobalBounds();
+	sf::FloatRect	boundingBoxPaddleRight =
+		paddleRight->m_sprite.getGlobalBounds();
+	sf::FloatRect	boundingBoxPaddleLeft =
+		paddleLeft->m_sprite.getGlobalBounds();
 	if ( boundingBoxBall.intersects( boundingBoxPaddleRight ) ) {
 		reverseNeeded = true;
 	} else if ( boundingBoxBall.intersects( boundingBoxPaddleLeft ) ) {
@@ -109,33 +127,49 @@ void Ball::collisionDetectRespond( void ) noexcept
 void Ball::update( sf::Time timeSinceLastUpdate )
 {
 	// =========== bounceback from top & bottom
-	if ( this->getTop() <= SETTINGS->playAreaTopLine || this->getBottom() >= SETTINGS->playAreaBottomLine ) {
+	if ( this->getTop() <= SETTINGS->playAreaTopLine || this->getBottom() >=
+	     SETTINGS->playAreaBottomLine ) {
 		this->m_velocity.y = -( this->m_velocity.y );
 		m_sColWall.play();
 	}
 	// calculate
 	sf::Vector2f moveDistance;
-	moveDistance.x = ( this->m_velocity.x * SETTINGS->ballSpeed ) * timeSinceLastUpdate.asMilliseconds();
-	moveDistance.y = ( this->m_velocity.y * SETTINGS->ballSpeed ) * timeSinceLastUpdate.asMilliseconds();
+	moveDistance.x = ( this->m_velocity.x * SETTINGS->ballSpeed ) *
+		timeSinceLastUpdate.asMilliseconds();
+	moveDistance.y = ( this->m_velocity.y * SETTINGS->ballSpeed ) *
+		timeSinceLastUpdate.asMilliseconds();
 	// action
 	this->m_sprite.move( moveDistance );
 
 	this->collisionDetectRespond();
 }
 
-void Ball::draw( sf::RenderTarget &target, sf::RenderStates states ) const { target.draw( this->m_sprite ); }
+void Ball::draw( sf::RenderTarget &target, sf::RenderStates
+	states ) const { target.draw( this->m_sprite ); }
 
-float Ball::getLeft()    const noexcept { return getX() - ( CONFIG_BALL_WIDTH / 2.f ); }
+float Ball::getLeft()    const noexcept {
+	return getX() - ( CONFIG_BALL_WIDTH /
+			  2.f );
+}
 
-float Ball::getRight()   const noexcept { return getX() + ( CONFIG_BALL_WIDTH / 2.f ); }
+float Ball::getRight()   const noexcept {
+	return getX() + ( CONFIG_BALL_WIDTH /
+			  2.f );
+}
 
 float Ball::getX() const noexcept { return m_sprite.getPosition().x; }
 
 float Ball::getY() const noexcept { return m_sprite.getPosition().y; }
 
-float Ball::getTop() const noexcept { return getY() - ( CONFIG_BALL_HEIGHT / 2.f ); }
+float Ball::getTop() const noexcept {
+	return getY() - ( CONFIG_BALL_HEIGHT /
+			  2.f );
+}
 
-float Ball::getBottom() const noexcept { return getY() + ( CONFIG_BALL_HEIGHT / 2.f ); }
+float Ball::getBottom() const noexcept {
+	return getY() + ( CONFIG_BALL_HEIGHT /
+			  2.f );
+}
 
 /* EOF */
 

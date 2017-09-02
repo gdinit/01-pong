@@ -15,14 +15,19 @@ void Application::run()
 	loadGlobals();
 
 	// Create render window
-	// TODO import the latest improved window creation code from space-flight
+	// TODO import the latest improved window creation code from
+	// space-flight
 	sf::ContextSettings windowSettings;
 	windowSettings.antialiasingLevel = 8;
-	m_window.create( sf::VideoMode { CONFIG_WIN_WIDTH, CONFIG_WIN_HEIGHT }, CONFIG_WINDOW_TITLE_TEXT, sf::Style::Titlebar | sf::Style::Close, windowSettings );
+	m_window.create( sf::VideoMode { CONFIG_WIN_WIDTH, CONFIG_WIN_HEIGHT },
+		CONFIG_WINDOW_TITLE_TEXT, sf::Style::Titlebar |
+		sf::Style::Close,
+		windowSettings );
 	m_window.setFramerateLimit( CONFIG_DESIRED_FPS_INT );
 	m_window.setKeyRepeatEnabled( false );
 
-	m_machine.run( StateMachine::build <IntroState> ( m_machine, m_window, true ) );
+	m_machine.run( StateMachine::build <IntroState> ( m_machine, m_window,
+			true ) );
 
 	// Main Loop
 	while ( m_machine.running() ) {
@@ -39,10 +44,13 @@ void Application::loadSettings()
 	SETTINGS->debugPrintToConsoleFPS = CONFIG_DEBUG_DYNFPS_CONSOLE_OUTPUT;
 	SETTINGS->paddleIndent = CONFIG_PADDLE_INDENT;
 	SETTINGS->playAreaTopLine = CONFIG_PLAY_AREA_INDENT_TOP;
-	SETTINGS->playAreaBottomLine = CONFIG_WIN_HEIGHT - CONFIG_PLAY_AREA_INDENT_BOTTOM;
+	SETTINGS->playAreaBottomLine = CONFIG_WIN_HEIGHT -
+		CONFIG_PLAY_AREA_INDENT_BOTTOM;
 	SETTINGS->paddleSpeedComputer = CONFIG_PADDLE_SPEED_COMPUTER;
 	SETTINGS->paddleSpeedHuman = CONFIG_PADDLE_SPEED_HUMAN;
 	SETTINGS->ballSpeed = CONFIG_BALL_SPEED;
+	std::cout << "Set SETTINGS->ballSpeed to:" << SETTINGS->ballSpeed <<
+	std::endl;
 	SETTINGS->currentScreenSizeWidth = CONFIG_WIN_WIDTH;
 	SETTINGS->currentScreenSizeHeight = CONFIG_WIN_HEIGHT;
 	SETTINGS->sideRightIsComputer = CONFIG_SIDE_RIGHT_IS_COMPUTER;

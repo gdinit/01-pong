@@ -10,14 +10,16 @@
 
 #include <SFML/Graphics.hpp>
 
-class Brick : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
+class Brick : public sf::Transformable, public sf::Drawable, private
+	    sf::NonCopyable
 {
 	public:
 		Brick();
 
 		virtual ~Brick();
 
-		virtual void draw( sf::RenderTarget &target, sf::RenderStates states ) const;
+		virtual void draw( sf::RenderTarget &target, sf::RenderStates
+		states ) const;
 
 		sf::Sprite	m_bricks [ CONFIG_INITIAL_BRICK_PIECES ];
 		sf::Vector2f	m_position;

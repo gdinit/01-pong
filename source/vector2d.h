@@ -34,8 +34,10 @@ class Vector2D
 
 		void rotate( float angle )
 		{
-			float	xt = ( x * cosf( angle ) ) - ( y * sinf( angle ) );
-			float	yt = ( y * cosf( angle ) ) + ( x * sinf( angle ) );
+			float	xt = ( x * cosf( angle ) ) - ( y * sinf(
+								       angle ) );
+			float	yt = ( y * cosf( angle ) ) + ( x * sinf(
+								       angle ) );
 			x = xt;
 			y = yt;
 		}

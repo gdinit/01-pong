@@ -16,7 +16,8 @@
 // required for RNG
 #include <chrono>
 
-class Ball : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
+class Ball : public sf::Transformable, public sf::Drawable, private
+	   sf::NonCopyable
 {
 	public:
 		Ball();
@@ -26,7 +27,8 @@ class Ball : public sf::Transformable, public sf::Drawable, private sf::NonCopya
 		void	newRound( bool throwTowardsRightSide );
 		void	collisionDetectRespond( void ) noexcept;
 		void	update( sf::Time timeSinceLastUpdate );
-		void	draw( sf::RenderTarget &target, sf::RenderStates states ) const;
+		void	draw( sf::RenderTarget &target, sf::RenderStates
+		states ) const;
 		float	getX()       const noexcept;
 		float	getY()       const noexcept;
 		float	getTop()     const noexcept;

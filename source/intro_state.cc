@@ -2,9 +2,9 @@
 
 #include "intro_state.h"
 
-IntroState::IntroState( StateMachine &	machine,
-	sf::RenderWindow &		window,
-	bool				replace )
+IntroState::IntroState( StateMachine &machine
+	, sf::RenderWindow &window
+	, bool replace )
 	: State{ machine, window, replace }
 {
 	initializeState();
@@ -26,7 +26,9 @@ void IntroState::initializeState()
 	m_statisticsText.setPosition( 5.f, 5.f );
 	m_statisticsText.setCharacterSize( 12u );
 	m_statisticsText.setFillColor( sf::Color::White );
-	updateDebugOverlayTextIfEnabled( true );// give me stats in the first frame, but first make up some plausible values
+	updateDebugOverlayTextIfEnabled( true );// give me stats in the first
+						// frame, but first make up some
+						// plausible values
 
 	// PressToContinue Text
 	m_fontPressToContinue.loadFromFile( "assets/fonts/sansation.ttf" );
@@ -35,7 +37,8 @@ void IntroState::initializeState()
 	m_textPressToContinue.setFillColor( sf::Color::White );
 	m_textPressToContinue.setString( "Press Space Bar to Continue" );
 	centerOrigin( m_textPressToContinue );
-	m_textPressToContinue.setPosition( ( m_worldView.getSize().x / 2 ), ( m_worldView.getSize().y / 2 ) );
+	m_textPressToContinue.setPosition( ( m_worldView.getSize().x / 2 ),
+		( m_worldView.getSize().y / 2 ) );
 
 	// Start off opaque
 	m_alpha = sf::Color { 0, 0, 0, 255 };
@@ -67,7 +70,8 @@ void IntroState::update()
 		// update statsText only once a second
 		if ( m_statisticsUpdateTime >= sf::seconds( 1.0f ) ) {
 			if ( m_statisticsNumFrames <= 1 ) {
-				break;	// if we're playing catchup, don't bother with debugOverlayText
+				break;	// if we're playing catchup, don't
+					// bother with debugOverlayText
 			}
 
 			recordObservedFPS();
@@ -78,13 +82,15 @@ void IntroState::update()
 			m_statisticsUpdateTime -= sf::seconds( 1.0f );
 			m_statisticsNumFrames = 0;
 		}// exiting update statsText only once a second
-	}// exiting "m_timeSinceLastUpdate > State::TimePerFrame". -- draw() will execute now.
+	}// exiting "m_timeSinceLastUpdate > State::TimePerFrame". -- draw()
+	// will execute now.
 	if ( m_alpha.a != 0 ) {
 		m_alpha.a--;
 	}
 	m_fader.setFillColor( m_alpha );
 
-	// TODO: add delay timer here & when timer is out, automatically continue to the main menu
+	// TODO: add delay timer here & when timer is out, automatically
+	// continue to the main menu
 }// exiting update()
 
 void IntroState::draw()
@@ -114,12 +120,18 @@ void IntroState::processEvents()
 				break;
 
 			case sf::Event::KeyPressed:
-				// NOTE: Intro should not have pause state (no user input = already paused state!)
+				// NOTE: Intro should not have pause state (no
+				// user input = already paused state!)
 				switch ( evt.key.code ) {
 					case sf::Keyboard::Escape:
 					case sf::Keyboard::Space:
 					case sf::Keyboard::Return:
-						m_next = StateMachine::build <MainMenuState> ( m_machine, m_window, true );
+						m_next =
+							StateMachine::build <
+								MainMenuState> (
+								m_machine,
+								m_window,
+								true );
 						break;
 					case sf::Keyboard::Q:
 						m_machine.quit();
@@ -131,7 +143,8 @@ void IntroState::processEvents()
 						this->toggleDebugConsoleOutput();
 						break;
 					case sf::Keyboard::F4:
-						this->toggleDebugDynFPSConsoleOutput();
+						this->
+						toggleDebugDynFPSConsoleOutput();
 						break;
 					default:
 						break;
