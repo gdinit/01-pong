@@ -1,13 +1,26 @@
-#PONG
-###A clone of the Classic Game Pong by gdinit
-https://github.com/gdinit
+# PONG
+### A clone of the Classic Game Pong by gdinit
+***This Software is in pre-release phase!***
 
-Please refer to "documentation/" for license, credits, and other information.
-There is a Windows binary available under releases.
+Intro
+--------------
+Everybody knows Pong, right?
 
-[![Build Status](http://jenkins.kzalloc.org/buildStatus/icon?job=01-pong)](http://jenkins.kzalloc.org/job/01-pong)
+Screenshots
+--------------
+Here is two!
 
 <img src="extras/github_readme_screenshots/title.png" height="512" alt="TitleScreenshot"/>
-
 <img src="extras/github_readme_screenshots/gameplay.png" height="512" alt="GameplayScreenshot"/> 
 
+Install
+-------
+There is a pre-release Windows binary available under releases.
+
+Credits
+-------
+Please refer to "documentation/".
+
+License
+-------
+See the additional LICENSE file, under "documentation/".
