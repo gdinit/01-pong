@@ -34,11 +34,19 @@
 # Mac
 .DS_Store
 
+# tmp text files
+__tmp__*.txt
+
 # IGNORE everything under these directories
 **/build
 **/.vscode
+**/source.tmp.cleaned-up
+**/buildscripts
 
 # INCLUDE everything under these directories -- list this at the very bottom
 !dependencies/*
+
+/cmake-build-debug/
+#/.idea/
 
 #EOF
