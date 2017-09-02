@@ -39,8 +39,8 @@ void PauseState::initializeState()
 	m_textPressToContinue.setFillColor( sf::Color::White );
 	m_textPressToContinue.setString( "GAME PAUSED" );
 	centerOrigin( m_textPressToContinue );
-	m_textPressToContinue.setPosition( ( m_worldView.getSize().x / 2 ),
-		( m_worldView.getSize().y / 2 ) );
+	m_textPressToContinue.setPosition( ( m_worldView.getSize().x / 2 )
+		, ( m_worldView.getSize().y / 2 ) );
 
 	// PressToContinue Text Line 2
 	m_fontPressToContinueLine2.loadFromFile( "assets/fonts/sansation.ttf" );
@@ -50,8 +50,8 @@ void PauseState::initializeState()
 	m_textPressToContinueLine2.setString(
 		"\nPress ESC, PauseBreak, or P to continue" );
 	centerOrigin( m_textPressToContinueLine2 );
-	m_textPressToContinueLine2.setPosition( ( m_worldView.getSize().x / 2 ),
-		( ( m_worldView.getSize().y / 2 ) + 50 ) );
+	m_textPressToContinueLine2.setPosition( ( m_worldView.getSize().x / 2 )
+		, ( ( m_worldView.getSize().y / 2 ) + 50 ) );
 }
 
 void PauseState::pause()

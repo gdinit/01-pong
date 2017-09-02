@@ -24,7 +24,8 @@ constexpr unsigned short int	CONFIG_OBSERVED_FPS_ACT_THRESHOLD { 5 };
 constexpr float			CONFIG_FPS_CATCHUP_STEP_F { 0.5 };
 constexpr unsigned short int
 				CONFIG_DYNFPS_TOO_YOUNG_THRESHOLD_SECONDS_INT {
-	5 };
+	5
+};
 constexpr unsigned short int
 				CONFIG_FPS_OVERLAY_MIN_AGE_TO_UPDATE_SECONDS_INT
 { 1 };

@@ -19,15 +19,15 @@ void Application::run()
 	// space-flight
 	sf::ContextSettings windowSettings;
 	windowSettings.antialiasingLevel = 8;
-	m_window.create( sf::VideoMode { CONFIG_WIN_WIDTH, CONFIG_WIN_HEIGHT },
-		CONFIG_WINDOW_TITLE_TEXT, sf::Style::Titlebar |
-		sf::Style::Close,
-		windowSettings );
+	m_window.create( sf::VideoMode { CONFIG_WIN_WIDTH, CONFIG_WIN_HEIGHT }
+		, CONFIG_WINDOW_TITLE_TEXT, sf::Style::Titlebar |
+		sf::Style::Close
+		, windowSettings );
 	m_window.setFramerateLimit( CONFIG_DESIRED_FPS_INT );
 	m_window.setKeyRepeatEnabled( false );
 
-	m_machine.run( StateMachine::build <IntroState> ( m_machine, m_window,
-			true ) );
+	m_machine.run( StateMachine::build <IntroState> ( m_machine, m_window
+			, true ) );
 
 	// Main Loop
 	while ( m_machine.running() ) {

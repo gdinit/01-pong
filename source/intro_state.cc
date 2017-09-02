@@ -37,8 +37,8 @@ void IntroState::initializeState()
 	m_textPressToContinue.setFillColor( sf::Color::White );
 	m_textPressToContinue.setString( "Press Space Bar to Continue" );
 	centerOrigin( m_textPressToContinue );
-	m_textPressToContinue.setPosition( ( m_worldView.getSize().x / 2 ),
-		( m_worldView.getSize().y / 2 ) );
+	m_textPressToContinue.setPosition( ( m_worldView.getSize().x / 2 )
+		, ( m_worldView.getSize().y / 2 ) );
 
 	// Start off opaque
 	m_alpha = sf::Color { 0, 0, 0, 255 };
@@ -129,9 +129,9 @@ void IntroState::processEvents()
 						m_next =
 							StateMachine::build <
 								MainMenuState> (
-								m_machine,
-								m_window,
-								true );
+								m_machine
+								, m_window
+								, true );
 						break;
 					case sf::Keyboard::Q:
 						m_machine.quit();

@@ -15,8 +15,8 @@ Brick::Brick()
 		} else {
 			m_bricks [ n ].setTexture( m_textureBlack );
 		}
-		m_bricks [ n ].setTextureRect( sf::IntRect( 0, 0,
-				CONFIG_BRICK_WIDTH, CONFIG_BRICK_HEIGHT ) );
+		m_bricks [ n ].setTextureRect( sf::IntRect( 0, 0
+				, CONFIG_BRICK_WIDTH, CONFIG_BRICK_HEIGHT ) );
 		m_bricks [ n ].setPosition( CONFIG_WIN_WIDTH / 2, n *
 			CONFIG_BRICK_HEIGHT );
 	}

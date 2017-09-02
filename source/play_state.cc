@@ -149,18 +149,18 @@ void PlayState::processEvents()
 						m_next =
 							StateMachine::	build <
 								PauseState> (
-								m_machine,
-								m_window,
-								false );
+								m_machine
+								, m_window
+								, false );
 						break;
 					case sf::Keyboard::Pause:
 					case sf::Keyboard::P:
 						m_next =
 							StateMachine::	build <
 								PauseState> (
-								m_machine,
-								m_window,
-								false );
+								m_machine
+								, m_window
+								, false );
 						break;
 					case sf::Keyboard::Q:
 						m_machine.quit();
@@ -169,9 +169,9 @@ void PlayState::processEvents()
 						m_next =
 							StateMachine::build <
 								MainMenuState> (
-								m_machine,
-								m_window,
-								true );
+								m_machine
+								, m_window
+								, true );
 						break;
 					case sf::Keyboard::Up:
 					case sf::Keyboard::W:

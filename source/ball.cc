@@ -15,9 +15,9 @@ Ball::Ball()
 
 	// Create a sprite
 	m_sprite.setTexture( m_texture );
-	m_sprite.setTextureRect( sf::IntRect( CONFIG_BALL_SPAWN_POS,
-			CONFIG_BALL_SPAWN_POS, CONFIG_BALL_WIDTH,
-			CONFIG_BALL_HEIGHT ) );
+	m_sprite.setTextureRect( sf::IntRect( CONFIG_BALL_SPAWN_POS
+			, CONFIG_BALL_SPAWN_POS, CONFIG_BALL_WIDTH
+			, CONFIG_BALL_HEIGHT ) );
 	m_sprite.setOrigin( CONFIG_BALL_WIDTH / 2.f, CONFIG_BALL_HEIGHT / 2.f );
 
 	// no hits so far, thus the velocity is zero
@@ -46,12 +46,11 @@ void Ball::newRound( bool throwTowardsRightSide )
 		centreOfScreen { (
 					 centreOfScreen.x =
 						 SETTINGS->
-		currentScreenSizeWidth /
-						 2 ), ( centreOfScreen.y =
-								SETTINGS->
-								currentScreenSizeHeight
-		/
-								2 ) };
+						 currentScreenSizeWidth / 2 )
+				 , ( centreOfScreen.y =
+					     SETTINGS
+					     ->
+					     currentScreenSizeHeight / 2 ) };
 	// this->m_sprite.setPosition( centreOfScreen );
 	m_sprite.setPosition( centreOfScreen );
 
@@ -148,13 +147,11 @@ void Ball::draw( sf::RenderTarget &target, sf::RenderStates
 	states ) const { target.draw( this->m_sprite ); }
 
 float Ball::getLeft()    const noexcept {
-	return getX() - ( CONFIG_BALL_WIDTH /
-			  2.f );
+	return getX() - ( CONFIG_BALL_WIDTH / 2.f );
 }
 
 float Ball::getRight()   const noexcept {
-	return getX() + ( CONFIG_BALL_WIDTH /
-			  2.f );
+	return getX() + ( CONFIG_BALL_WIDTH / 2.f );
 }
 
 float Ball::getX() const noexcept { return m_sprite.getPosition().x; }
@@ -162,13 +159,11 @@ float Ball::getX() const noexcept { return m_sprite.getPosition().x; }
 float Ball::getY() const noexcept { return m_sprite.getPosition().y; }
 
 float Ball::getTop() const noexcept {
-	return getY() - ( CONFIG_BALL_HEIGHT /
-			  2.f );
+	return getY() - ( CONFIG_BALL_HEIGHT / 2.f );
 }
 
 float Ball::getBottom() const noexcept {
-	return getY() + ( CONFIG_BALL_HEIGHT /
-			  2.f );
+	return getY() + ( CONFIG_BALL_HEIGHT / 2.f );
 }
 
 /* EOF */

@@ -33,8 +33,8 @@ void Scoreboard::incrementRight()
 
 void Scoreboard::centrePosition()
 {
-	m_scoreText.setPosition( ( SETTINGS->currentScreenSizeWidth / 2 ),
-		+60.f );
+	m_scoreText.setPosition( ( SETTINGS->currentScreenSizeWidth / 2 )
+		, +60.f );
 }
 
 void Scoreboard::update( sf::Time timeSinceLastUpdate )

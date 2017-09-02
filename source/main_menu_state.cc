@@ -2,8 +2,8 @@
 
 #include "main_menu_state.h"
 
-MainMenuState::MainMenuState( StateMachine &machine, sf::RenderWindow &window,
-	bool replace )
+MainMenuState::MainMenuState( StateMachine &machine, sf::RenderWindow &window
+	, bool replace )
 	: State{ machine, window, replace }
 {
 	initializeState();
@@ -39,12 +39,12 @@ void MainMenuState::initializeState()
 
 	// PlayMenuButton ======================
 	m_sprPlay.setTexture( m_textureWhite );
-	m_sprPlay.setTextureRect( sf::IntRect( 0, 0, CONFIG_MENU_BOX_WIDTH,
-			CONFIG_MENU_BOX_HEIGHT ) );
-	m_sprPlay.setOrigin( CONFIG_MENU_BOX_WIDTH / 2.f,
-		CONFIG_MENU_BOX_HEIGHT / 2.f );
-	m_sprPlay.setPosition( ( m_worldView.getSize().x / 2 ),
-		( m_worldView.getSize().y * CONFIG_MENU_BUTTON_1 ) );
+	m_sprPlay.setTextureRect( sf::IntRect( 0, 0, CONFIG_MENU_BOX_WIDTH
+			, CONFIG_MENU_BOX_HEIGHT ) );
+	m_sprPlay.setOrigin( CONFIG_MENU_BOX_WIDTH / 2.f
+		, CONFIG_MENU_BOX_HEIGHT / 2.f );
+	m_sprPlay.setPosition( ( m_worldView.getSize().x / 2 )
+		, ( m_worldView.getSize().y * CONFIG_MENU_BUTTON_1 ) );
 	m_sprPlayNeedSFX = true;
 	m_sprPlayButtonHot = false;
 	m_fontPlayText.loadFromFile( "assets/fonts/sansation.ttf" );
@@ -53,18 +53,18 @@ void MainMenuState::initializeState()
 	m_textPlay.setFillColor( sf::Color::Black );
 	m_textPlay.setString( "play   (space)" );
 	centerOrigin( m_textPlay );
-	m_textPlay.setPosition( ( m_worldView.getSize().x / 2 ),
-		( m_worldView.getSize().y * CONFIG_MENU_BUTTON_1 ) );
+	m_textPlay.setPosition( ( m_worldView.getSize().x / 2 )
+		, ( m_worldView.getSize().y * CONFIG_MENU_BUTTON_1 ) );
 	// =====================================
 
 	// CreditsMenuButton ===================
 	m_sprCredits.setTexture( m_textureWhite );
-	m_sprCredits.setTextureRect( sf::IntRect( 0, 0, CONFIG_MENU_BOX_WIDTH,
-			CONFIG_MENU_BOX_HEIGHT ) );
-	m_sprCredits.setOrigin( CONFIG_MENU_BOX_WIDTH / 2.f,
-		CONFIG_MENU_BOX_HEIGHT / 2.f );
-	m_sprCredits.setPosition( ( m_worldView.getSize().x / 2 ),
-		( m_worldView.getSize().y * CONFIG_MENU_BUTTON_2 ) );
+	m_sprCredits.setTextureRect( sf::IntRect( 0, 0, CONFIG_MENU_BOX_WIDTH
+			, CONFIG_MENU_BOX_HEIGHT ) );
+	m_sprCredits.setOrigin( CONFIG_MENU_BOX_WIDTH / 2.f
+		, CONFIG_MENU_BOX_HEIGHT / 2.f );
+	m_sprCredits.setPosition( ( m_worldView.getSize().x / 2 )
+		, ( m_worldView.getSize().y * CONFIG_MENU_BUTTON_2 ) );
 	m_sprCreditsNeedSFX = true;
 	m_sprCreditsButtonHot = false;
 	m_fontCreditsText.loadFromFile( "assets/fonts/sansation.ttf" );
@@ -73,18 +73,18 @@ void MainMenuState::initializeState()
 	m_textCredits.setFillColor( sf::Color::Black );
 	m_textCredits.setString( "credits   (C)" );
 	centerOrigin( m_textCredits );
-	m_textCredits.setPosition( ( m_worldView.getSize().x / 2 ),
-		( m_worldView.getSize().y * CONFIG_MENU_BUTTON_2 ) );
+	m_textCredits.setPosition( ( m_worldView.getSize().x / 2 )
+		, ( m_worldView.getSize().y * CONFIG_MENU_BUTTON_2 ) );
 	// =====================================
 
 	// QuitMenuButton ======================
 	m_sprQuit.setTexture( m_textureWhite );
-	m_sprQuit.setTextureRect( sf::IntRect( 0, 0, CONFIG_MENU_BOX_WIDTH,
-			CONFIG_MENU_BOX_HEIGHT ) );
-	m_sprQuit.setOrigin( CONFIG_MENU_BOX_WIDTH / 2.f,
-		CONFIG_MENU_BOX_HEIGHT / 2.f );
-	m_sprQuit.setPosition( ( m_worldView.getSize().x / 2 ),
-		( m_worldView.getSize().y * CONFIG_MENU_BUTTON_3 ) );
+	m_sprQuit.setTextureRect( sf::IntRect( 0, 0, CONFIG_MENU_BOX_WIDTH
+			, CONFIG_MENU_BOX_HEIGHT ) );
+	m_sprQuit.setOrigin( CONFIG_MENU_BOX_WIDTH / 2.f
+		, CONFIG_MENU_BOX_HEIGHT / 2.f );
+	m_sprQuit.setPosition( ( m_worldView.getSize().x / 2 )
+		, ( m_worldView.getSize().y * CONFIG_MENU_BUTTON_3 ) );
 	m_sprQuitNeedSFX = true;
 	m_sprQuitButtonHot = false;
 	m_fontQuitText.loadFromFile( "assets/fonts/sansation.ttf" );
@@ -93,8 +93,8 @@ void MainMenuState::initializeState()
 	m_textQuit.setFillColor( sf::Color::Black );
 	m_textQuit.setString( "quit   (Q)" );
 	centerOrigin( m_textQuit );
-	m_textQuit.setPosition( ( m_worldView.getSize().x / 2 ),
-		( m_worldView.getSize().y * CONFIG_MENU_BUTTON_3 ) );
+	m_textQuit.setPosition( ( m_worldView.getSize().x / 2 )
+		, ( m_worldView.getSize().y * CONFIG_MENU_BUTTON_3 ) );
 	// =====================================
 }
 
@@ -125,8 +125,8 @@ void MainMenuState::buttonCollisionDetectRespond( void ) noexcept
 	       m_sprPlay.getGlobalBounds().height ) ) {
 		m_textPlay.setCharacterSize( 36u );
 		centerOrigin( m_textPlay );
-		m_textPlay.setPosition( ( m_worldView.getSize().x / 2 ),
-			( m_worldView.getSize().y * CONFIG_MENU_BUTTON_1 ) );
+		m_textPlay.setPosition( ( m_worldView.getSize().x / 2 )
+			, ( m_worldView.getSize().y * CONFIG_MENU_BUTTON_1 ) );
 		m_sprPlayButtonHot = true;
 		if ( m_sprPlayNeedSFX ) {
 			m_sMouseOver.play();
@@ -137,8 +137,8 @@ void MainMenuState::buttonCollisionDetectRespond( void ) noexcept
 		m_sprPlayNeedSFX = true;
 		m_textPlay.setCharacterSize( 28u );
 		centerOrigin( m_textPlay );
-		m_textPlay.setPosition( ( m_worldView.getSize().x / 2 ),
-			( m_worldView.getSize().y * CONFIG_MENU_BUTTON_1 ) );
+		m_textPlay.setPosition( ( m_worldView.getSize().x / 2 )
+			, ( m_worldView.getSize().y * CONFIG_MENU_BUTTON_1 ) );
 	}
 	// =====================================
 
@@ -155,8 +155,8 @@ void MainMenuState::buttonCollisionDetectRespond( void ) noexcept
 	       m_sprCredits.getGlobalBounds().height ) ) {
 		m_textCredits.setCharacterSize( 36u );
 		centerOrigin( m_textCredits );
-		m_textCredits.setPosition( ( m_worldView.getSize().x / 2 ),
-			( m_worldView.getSize().y * CONFIG_MENU_BUTTON_2 ) );
+		m_textCredits.setPosition( ( m_worldView.getSize().x / 2 )
+			, ( m_worldView.getSize().y * CONFIG_MENU_BUTTON_2 ) );
 		m_sprCreditsButtonHot = true;
 		if ( m_sprCreditsNeedSFX ) {
 			m_sMouseOver.play();
@@ -167,8 +167,8 @@ void MainMenuState::buttonCollisionDetectRespond( void ) noexcept
 		m_sprCreditsNeedSFX = true;
 		m_textCredits.setCharacterSize( 28u );
 		centerOrigin( m_textCredits );
-		m_textCredits.setPosition( ( m_worldView.getSize().x / 2 ),
-			( m_worldView.getSize().y * CONFIG_MENU_BUTTON_2 ) );
+		m_textCredits.setPosition( ( m_worldView.getSize().x / 2 )
+			, ( m_worldView.getSize().y * CONFIG_MENU_BUTTON_2 ) );
 	}
 	// =====================================
 
@@ -185,8 +185,8 @@ void MainMenuState::buttonCollisionDetectRespond( void ) noexcept
 	       m_sprQuit.getGlobalBounds().height ) ) {
 		m_textQuit.setCharacterSize( 36u );
 		centerOrigin( m_textQuit );
-		m_textQuit.setPosition( ( m_worldView.getSize().x / 2 ),
-			( m_worldView.getSize().y * CONFIG_MENU_BUTTON_3 ) );
+		m_textQuit.setPosition( ( m_worldView.getSize().x / 2 )
+			, ( m_worldView.getSize().y * CONFIG_MENU_BUTTON_3 ) );
 		m_sprQuitButtonHot = true;
 		if ( m_sprQuitNeedSFX ) {
 			m_sMouseOver.play();
@@ -197,8 +197,8 @@ void MainMenuState::buttonCollisionDetectRespond( void ) noexcept
 		m_sprQuitNeedSFX = true;
 		m_textQuit.setCharacterSize( 28u );
 		centerOrigin( m_textQuit );
-		m_textQuit.setPosition( ( m_worldView.getSize().x / 2 ),
-			( m_worldView.getSize().y * CONFIG_MENU_BUTTON_3 ) );
+		m_textQuit.setPosition( ( m_worldView.getSize().x / 2 )
+			, ( m_worldView.getSize().y * CONFIG_MENU_BUTTON_3 ) );
 	}
 	// =====================================
 }
@@ -275,15 +275,15 @@ void MainMenuState::processEvents()
 					m_sMouseClicked.play();
 					m_next =
 						StateMachine::build <PlayState> (
-							m_machine,
-							m_window, true );
+							m_machine
+							, m_window, true );
 					break;
 				} else if ( m_sprCreditsButtonHot ) {
 					m_sMouseClicked.play();
 					m_next =
 						StateMachine::build <PlayState> (
-							m_machine,
-							m_window, true );
+							m_machine
+							, m_window, true );
 					break;
 				} else if ( m_sprQuitButtonHot ) {
 					m_sMouseClicked.play();
@@ -297,9 +297,9 @@ void MainMenuState::processEvents()
 						m_next =
 							StateMachine::build <
 								PlayState> (
-								m_machine,
-								m_window,
-								true );
+								m_machine
+								, m_window
+								, true );
 						break;
 					case sf::Keyboard::F2:
 						this->toggleDebugShowOverlay();
