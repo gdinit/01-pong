@@ -1,4 +1,4 @@
-[![Build Status](http://jenkins.kzalloc.org/buildStatus/icon?job=01-pong)](http://jenkins.kzalloc.org/job/01-pong/)
+[![Build Status](http://jenkins.kzalloc.org/buildStatus/icon?style=plastic&job=01-pong)](http://jenkins.kzalloc.org/job/01-pong/)
 
 # PONG
 ### A clone of the Classic Game Pong by gdinit
